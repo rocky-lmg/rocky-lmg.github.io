@@ -2049,7 +2049,7 @@ p > code {
   }
 }
 body {
-      background-color: #eee;
+      background-color: #212529;
     }.header {
         width: 960px;
         margin: 0 auto;
@@ -2061,7 +2061,7 @@ body {
       }
     
     .post-body {
-      font-size: 16px !important
+      font-size: 15px !important
     }
     body {
       color: #555;
