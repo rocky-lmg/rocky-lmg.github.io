@@ -71,6 +71,61 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-LLM-Interview-Note" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/05/14/LLM-Interview-Note/" class="article-date">
+  <time class="dt-published" datetime="2025-05-14T14:27:14.000Z" itemprop="datePublished">2025-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/05/14/LLM-Interview-Note/">LLM_Interview_Note</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>1.当训练推理卡规模倍增的情况下，最容易产生瓶颈的位置可能是什么？<br>a.请展开分析产生的原因<br>b.对于此类问题，有什么优化或者缓解的方案</p>
+<p>2.请解释并介绍一下Roofline模型，如何判断性能已经达到计算瓶颈</p>
+<p>3.请介绍一下Flash-attention&#x2F;Page attention</p>
+<p>4.当进行GEMM计算时，一定可以保证它是一个计算瓶颈的算子？优化思路如何？</p>
+<p>5.对于性能优化的定位和瓶颈的检测</p>
+<p>6.GQA attention模块的实现</p>
+<p>7.什么是scaling law</p>
+<p>8.模型结构</p>
+<p>9.解决显存容量不够的方法，对于显存优化的选择有什么看法？</p>
+<p>10.MOE 和Dense模型的区别 各自的优缺点<br>a.计算量、参数量、训练效果<br>b.如何选择</p>
+<p>11.宏观上推理prefill、decode过程 prefill是compute bound、decode是memory bound</p>
+<p>12.算子gemm、transpose、mha、rmsnorm、gemv、rope等算子的优化方案</p>
+<p>13.量化awq&#x2F;fp8&#x2F;bf16&#x2F;int8&#x2F;gptq&#x2F;wight-only优化</p>
+<p>14.分布式推理 DP TP PP </p>
+<p>15.推理优化 continuous batching&#x2F;speculative decoding </p>
+<p>16.分布式推理all-reduce&#x2F;all-gather 优化</p>
+<p>17.通信优化nccl infiniband优化</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/05/14/LLM-Interview-Note/" data-id="cmao1chbr0000e5310wc3aupa" data-title="LLM_Interview_Note" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/05/14/hello-world/" class="article-date">
@@ -203,6 +258,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2025/05/14/LLM-Interview-Note/">LLM_Interview_Note</a>
+          </li>
         
           <li>
             <a href="/2025/05/14/hello-world/">Hello World</a>

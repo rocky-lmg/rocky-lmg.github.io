@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>LLM_Interview_Note | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="1.当训练推理卡规模倍增的情况下，最容易产生瓶颈的位置可能是什么？a.请展开分析产生的原因b.对于此类问题，有什么优化或者缓解的方案 2.请解释并介绍一下Roofline模型，如何判断性能已经达到计算瓶颈 3.请介绍一下Flash-attention&#x2F;Page attention 4.当进行GEMM计算时，一定可以保证它是一个计算瓶颈的算子？优化思路如何？ 5.对于性能优化的定位和瓶颈的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLM_Interview_Note">
+<meta property="og:url" content="http://example.com/2025/05/14/LLM-Interview-Note/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.当训练推理卡规模倍增的情况下，最容易产生瓶颈的位置可能是什么？a.请展开分析产生的原因b.对于此类问题，有什么优化或者缓解的方案 2.请解释并介绍一下Roofline模型，如何判断性能已经达到计算瓶颈 3.请介绍一下Flash-attention&#x2F;Page attention 4.当进行GEMM计算时，一定可以保证它是一个计算瓶颈的算子？优化思路如何？ 5.对于性能优化的定位和瓶颈的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-05-14T14:27:14.000Z">
+<meta property="article:modified_time" content="2025-05-14T14:27:59.300Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-LLM-Interview-Note" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/05/14/LLM-Interview-Note/" class="article-date">
+  <time class="dt-published" datetime="2025-05-14T14:27:14.000Z" itemprop="datePublished">2025-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      LLM_Interview_Note
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>1.当训练推理卡规模倍增的情况下，最容易产生瓶颈的位置可能是什么？<br>a.请展开分析产生的原因<br>b.对于此类问题，有什么优化或者缓解的方案</p>
+<p>2.请解释并介绍一下Roofline模型，如何判断性能已经达到计算瓶颈</p>
+<p>3.请介绍一下Flash-attention&#x2F;Page attention</p>
+<p>4.当进行GEMM计算时，一定可以保证它是一个计算瓶颈的算子？优化思路如何？</p>
+<p>5.对于性能优化的定位和瓶颈的检测</p>
+<p>6.GQA attention模块的实现</p>
+<p>7.什么是scaling law</p>
+<p>8.模型结构</p>
+<p>9.解决显存容量不够的方法，对于显存优化的选择有什么看法？</p>
+<p>10.MOE 和Dense模型的区别 各自的优缺点<br>a.计算量、参数量、训练效果<br>b.如何选择</p>
+<p>11.宏观上推理prefill、decode过程 prefill是compute bound、decode是memory bound</p>
+<p>12.算子gemm、transpose、mha、rmsnorm、gemv、rope等算子的优化方案</p>
+<p>13.量化awq&#x2F;fp8&#x2F;bf16&#x2F;int8&#x2F;gptq&#x2F;wight-only优化</p>
+<p>14.分布式推理 DP TP PP </p>
+<p>15.推理优化 continuous batching&#x2F;speculative decoding </p>
+<p>16.分布式推理all-reduce&#x2F;all-gather 优化</p>
+<p>17.通信优化nccl infiniband优化</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/05/14/LLM-Interview-Note/" data-id="cmao1chbr0000e5310wc3aupa" data-title="LLM_Interview_Note" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2025/05/14/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">May 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">April 2025</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/05/14/LLM-Interview-Note/">LLM_Interview_Note</a>
+          </li>
+        
+          <li>
+            <a href="/2025/05/14/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/29/%E6%88%91%E7%9A%84450MT%E6%8F%90%E8%BD%A6%E6%97%A5%E8%AE%B0/">我的450MT提车日记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
