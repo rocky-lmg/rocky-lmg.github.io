@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/silver/pace-theme-barber-shop.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.23.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="1. 引言 AI计算需求与硬件挑战 当我尝试训练一个大模型时，通常会遇到两个挑战：  这个模型能否在现有硬件环境中运行？  需要多长时间才能完成一个数据集的训练？ 这个两个挑战的核心也正式是大模型的扩展定律（Scaling Law）中提到的队模型表现的两个因素：模型规模和数据规模。   Scaling Law ​    在 AI 模型的发展过程中，Scaling Law（扩展定律）成为推动性能提升">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GPU硬件架构解析">
+<meta property="og:url" content="http://example.com/2025/08/10/GPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="Mengge&#39;s Blog">
+<meta property="og:description" content="1. 引言 AI计算需求与硬件挑战 当我尝试训练一个大模型时，通常会遇到两个挑战：  这个模型能否在现有硬件环境中运行？  需要多长时间才能完成一个数据集的训练？ 这个两个挑战的核心也正式是大模型的扩展定律（Scaling Law）中提到的队模型表现的两个因素：模型规模和数据规模。   Scaling Law ​    在 AI 模型的发展过程中，Scaling Law（扩展定律）成为推动性能提升">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2025/08/10/GPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/Snipaste_2025-08-04_15-33-27.png">
+<meta property="og:image" content="https://l4rz.net/running-nvidia-sxm-gpus-in-consumer-pcs/images/sxm4-vicor-preso.jpg">
+<meta property="og:image" content="http://example.com/Users/rockyliu/Documents/Snipaste_2025-08-04_16-09-27.png">
+<meta property="og:image" content="http://example.com/Users/rockyliu/Documents/PCIe*8.png">
+<meta property="og:image" content="http://example.com/Users/rockyliu/Documents/HGX.png">
+<meta property="og:image" content="https://developer-blogs.nvidia.com/wp-content/uploads/2020/05/HGX_A100_8_way_3QTR_Front_Left-Edit-1-625x417.jpg">
+<meta property="og:image" content="http://example.com/Users/rockyliu/Documents/UBB8.png">
+<meta property="og:image" content="https://www.servethehome.com/wp-content/uploads/2025/06/AMD-Instinct-MI350X-UBB-8-GPU.jpg">
+<meta property="article:published_time" content="2025-08-10T10:18:38.000Z">
+<meta property="article:modified_time" content="2025-08-10T10:21:36.612Z">
+<meta property="article:author" content="Mengge Liu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/08/10/GPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/Snipaste_2025-08-04_15-33-27.png">
+
+
+<link rel="canonical" href="http://example.com/2025/08/10/GPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/10/GPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/","path":"2025/08/10/GPU硬件架构解析/","title":"GPU硬件架构解析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>GPU硬件架构解析 | Mengge's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mengge's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/About/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-GPU%E6%A0%B8%E5%BF%83%E6%9E%B6%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">2. GPU核心架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%8D%95GPU%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 单GPU内部结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%A4%9AGPU%E6%89%A9%E5%B1%95%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">2.2  多GPU扩展方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-AI%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">3. AI服务器系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E7%A1%AC%E4%BB%B6%E7%BB%84%E4%BB%B6%E7%BB%84%E6%88%90"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 硬件组件组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E4%BA%92%E8%81%94%E6%8A%80%E6%9C%AF%E5%AF%B9%E6%AF%94"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 互联技术对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BD%A2%E6%80%81%E4%B8%8E%E9%83%A8%E7%BD%B2"><span class="nav-number">4.</span> <span class="nav-text">4. 服务器形态与部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 服务器类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E6%95%A3%E7%83%AD%E4%B8%8E%E7%94%B5%E6%BA%90"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 散热与电源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="nav-number">5.</span> <span class="nav-text">5. 性能优化策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 内存优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E5%AD%98%E5%82%A8%E4%BC%98%E5%8C%96"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 存储优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF%E4%B8%8E%E5%B1%95%E6%9C%9B"><span class="nav-number">6.</span> <span class="nav-text">6. 发展趋势与展望</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E6%8A%80%E6%9C%AF%E6%BC%94%E8%BF%9B%E6%96%B9%E5%90%91"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 技术演进方向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E6%96%B0%E5%85%B4%E6%8A%80%E6%9C%AF%E5%BD%B1%E5%93%8D"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 新兴技术影响</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">7. 总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mengge Liu"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Mengge Liu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/10/GPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Mengge Liu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mengge's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="GPU硬件架构解析 | Mengge's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GPU硬件架构解析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-08-10 18:18:38 / Modified: 18:21:36" itemprop="dateCreated datePublished" datetime="2025-08-10T18:18:38+08:00">2025-08-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><ul>
+<li><p>AI计算需求与硬件挑战</p>
+<p>当我尝试训练一个大模型时，通常会遇到两个挑战：</p>
+<ol>
+<li><p>这个模型能否在现有硬件环境中运行？</p>
+</li>
+<li><p>需要多长时间才能完成一个数据集的训练？</p>
+<p>这个两个挑战的核心也正式是大模型的扩展定律（Scaling Law）中提到的队模型表现的两个因素：模型规模和数据规模。</p>
+</li>
+</ol>
+<p>Scaling Law</p>
+<p>​    在 AI 模型的发展过程中，Scaling Law（扩展定律）成为推动性能提升的重要理论基础。根据 Scaling Law，当模型参数、训练数据和硬件配置同步增加时，AI 模型的能力会随之提升。</p>
+</li>
+</ul>
+<p>​       硬件挑战</p>
+<p>​        a. 摩尔定律增速放缓、晶体管尺寸物理极限、能耗不断增加。</p>
+<p>​	b. 存储墙：存储器的数据访问速度跟不上计算处理速度。</p>
+<p>​	c. 能耗墙：随着芯片性能的提升，能耗和散热问题成为限制进一步性能提升的主要因素。</p>
+<ul>
+<li><p>GPU在AI计算中的核心地位</p>
+</li>
+<li><p>本文架构解析思路</p>
+<p>主要从以下三个维度进行解析：</p>
+<ul>
+<li><p>系统维度<br> 硬件组件层 → 子系统层 → 系统层 → 集群层<br>  ↓                           ↓                   ↓               ↓<br> GPU核心          GPU模组   AI服务器   AI集群</p>
+</li>
+<li><p>性能维度</p>
+<p> 计算瓶颈 → 内存瓶颈 → 存储瓶颈 → 网络瓶颈<br> ↓                      ↓                    ↓                   ↓<br> GPU算力    内存带宽           存储IO    网络延迟<br> ↓                      ↓                    ↓                   ↓<br> FLOPS         带宽&#x2F;延迟          IOPS     吞吐量&#x2F;延迟</p>
+</li>
+<li><p>扩展维度</p>
+<p> 单GPU → 多GPU → 单节点 → 多节点 → 大规模集群<br>   ↓                   ↓               ↓                 ↓                 ↓<br> 计算密度  互联带宽  节点密度   网络带宽    系统规模</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-GPU核心架构"><a href="#2-GPU核心架构" class="headerlink" title="2. GPU核心架构"></a>2. GPU核心架构</h2><h3 id="2-1-单GPU内部结构"><a href="#2-1-单GPU内部结构" class="headerlink" title="2.1 单GPU内部结构"></a>2.1 单GPU内部结构</h3><ul>
+<li><p>计算单元 (CUDA核心、张量核心)</p>
+</li>
+<li><p>内存层次 (寄存器、共享内存、L2缓存、显存)</p>
+</li>
+<li><p>互联结构 (PCIe、NVLink)</p>
+</li>
+</ul>
+<h3 id="2-2-多GPU扩展方式"><a href="#2-2-多GPU扩展方式" class="headerlink" title="2.2  多GPU扩展方式"></a>2.2  多GPU扩展方式</h3><p>单卡GPU形态</p>
+<table>
+<thead>
+<tr>
+<th>形态</th>
+<th>规格</th>
+<th align="left">版本演进</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PCIe卡</td>
+<td><img src="./Snipaste_2025-08-04_15-33-27.png" style="zoom:40%;" ></td>
+<td align="left">全高全长FHFL</td>
+<td></td>
+</tr>
+<tr>
+<td>SXM卡</td>
+<td><img src="https://l4rz.net/running-nvidia-sxm-gpus-in-consumer-pcs/images/sxm4-vicor-preso.jpg" style="zoom:25%;" /></td>
+<td align="left">SXM 1.0 Pascal <br>SXM 2.0 &amp; 3.0 Volta <br>SXM 4.0 Ampere <br>SXM 5.0 Hopper</td>
+<td><em>Server PCI Express Module</em></td>
+</tr>
+<tr>
+<td>OAM卡</td>
+<td><img src="/Users/rockyliu/Documents/Snipaste_2025-08-04_16-09-27.png" style="zoom:45%;" /></td>
+<td align="left">OAM 1.0  2019.07.13<br>OAM 1.1 2020.07.22<br>OAM 1.5 2022.02.23<br>OAM 2.0 2023.09.14</td>
+<td><em>OCP Accelerator Module</em></td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>单卡到多卡的技术路径</p>
+<p>常见三种GPU形态，但是在实际使用中很少出现单卡场景，通常搭配两卡、四卡及八卡使用；</p>
+<ul>
+<li><p>多卡物理形态</p>
+<table>
+<thead>
+<tr>
+<th>形态</th>
+<th>拓扑结构</th>
+<th>规格</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PCIe 多卡</td>
+<td></td>
+<td><img src="/Users/rockyliu/Documents/PCIe*8.png" style="zoom:35%;" /></td>
+<td></td>
+</tr>
+<tr>
+<td>HGX</td>
+<td><img src="/Users/rockyliu/Documents/HGX.png" style="zoom:50%;" /></td>
+<td><a target="_blank" rel="noopener" href="https://www.nvidia.com/en-us/data-center/hgx/">HGX-Platform</a> 8卡<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2020/05/HGX_A100_8_way_3QTR_Front_Left-Edit-1-625x417.jpg" style="zoom:45%;" />&#x2F;&gt;</td>
+<td>该基板搭载：<br>i.8 &#x2F;4 个 NVIDIA GPU <br>ii.6 个 NVSwitch 节点。<br>(*Ps:*NVSwitch数量不固定)</td>
+</tr>
+<tr>
+<td>UBB</td>
+<td><img src="/Users/rockyliu/Documents/UBB8.png" alt="image-20250804172853058" style="zoom:20%;" /></td>
+<td><img src="https://www.servethehome.com/wp-content/uploads/2025/06/AMD-Instinct-MI350X-UBB-8-GPU.jpg" style="zoom:25%;" /></td>
+<td><em>Universal Baseboard</em></td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://developer-blogs.nvidia.com/wp-content/uploads/2020/05/HGX_A100_8_way_3QTR_Front_Left-Edit-1-625x417.jpg">https://developer-blogs.nvidia.com/wp-content/uploads/2020/05/HGX_A100_8_way_3QTR_Front_Left-Edit-1-625x417.jpg</a></p>
+<p>GPU集群拓扑结构</p>
+</li>
+</ul>
+</li>
+<li><p>带宽与延迟挑战</p>
+</li>
+</ul>
+<h2 id="3-AI服务器系统架构"><a href="#3-AI服务器系统架构" class="headerlink" title="3. AI服务器系统架构"></a>3. AI服务器系统架构</h2><h3 id="3-1-硬件组件组成"><a href="#3-1-硬件组件组成" class="headerlink" title="3.1 硬件组件组成"></a>3.1 硬件组件组成</h3><ul>
+<li><p>CPU与系统内存</p>
+</li>
+<li><p>GPU模组与显存</p>
+</li>
+<li><p>存储系统 (NVMe SSD)</p>
+</li>
+<li><p>网络接口 (InfiniBand&#x2F;RoCE)</p>
+</li>
+</ul>
+<h3 id="3-2-互联技术对比"><a href="#3-2-互联技术对比" class="headerlink" title="3.2 互联技术对比"></a>3.2 互联技术对比</h3><ul>
+<li><p>PCIe vs NVLink vs InfiniBand</p>
+</li>
+<li><p>GPU Direct RDMA技术</p>
+</li>
+<li><p>数据传输优化策略</p>
+</li>
+</ul>
+<h2 id="4-服务器形态与部署"><a href="#4-服务器形态与部署" class="headerlink" title="4. 服务器形态与部署"></a>4. 服务器形态与部署</h2><h3 id="4-1-服务器类型"><a href="#4-1-服务器类型" class="headerlink" title="4.1 服务器类型"></a>4.1 服务器类型</h3><ul>
+<li><p>紧耦合型 (DGX系列)</p>
+</li>
+<li><p>模块化型 (OAM&#x2F;OCP标准)</p>
+</li>
+<li><p>定制化解决方案</p>
+</li>
+</ul>
+<h3 id="4-2-散热与电源"><a href="#4-2-散热与电源" class="headerlink" title="4.2 散热与电源"></a>4.2 散热与电源</h3><ul>
+<li><p>风冷 vs 液冷方案</p>
+</li>
+<li><p>高密度GPU的散热挑战</p>
+</li>
+<li><p>电源管理与能效优化</p>
+</li>
+</ul>
+<h2 id="5-性能优化策略"><a href="#5-性能优化策略" class="headerlink" title="5. 性能优化策略"></a>5. 性能优化策略</h2><h3 id="5-1-内存优化"><a href="#5-1-内存优化" class="headerlink" title="5.1 内存优化"></a>5.1 内存优化</h3><ul>
+<li><p>HBM vs GDDR显存选择</p>
+</li>
+<li><p>显存容量与带宽平衡</p>
+</li>
+<li><p>大模型训练的内存策略</p>
+</li>
+</ul>
+<h3 id="5-2-存储优化"><a href="#5-2-存储优化" class="headerlink" title="5.2 存储优化"></a>5.2 存储优化</h3><ul>
+<li><p>GPU Direct Storage技术</p>
+</li>
+<li><p>NVMe存储直通</p>
+</li>
+<li><p>数据加载性能优化</p>
+</li>
+</ul>
+<h2 id="6-发展趋势与展望"><a href="#6-发展趋势与展望" class="headerlink" title="6. 发展趋势与展望"></a>6. 发展趋势与展望</h2><h3 id="6-1-技术演进方向"><a href="#6-1-技术演进方向" class="headerlink" title="6.1 技术演进方向"></a>6.1 技术演进方向</h3><ul>
+<li><p>计算密度持续提升</p>
+</li>
+<li><p>互联带宽不断增长</p>
+</li>
+<li><p>异构计算加速器整合</p>
+</li>
+</ul>
+<h3 id="6-2-新兴技术影响"><a href="#6-2-新兴技术影响" class="headerlink" title="6.2 新兴技术影响"></a>6.2 新兴技术影响</h3><ul>
+<li><p>存储-计算融合架构</p>
+</li>
+<li><p>近数据计算技术</p>
+</li>
+<li><p>未来AI硬件发展方向</p>
+</li>
+</ul>
+<h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><ul>
+<li><p>AI服务器架构设计要点</p>
+</li>
+<li><p>性能瓶颈与优化方向</p>
+</li>
+<li><p>技术选型建议</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/10/CPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/" rel="prev" title="CPU硬件架构解析">
+                  <i class="fa fa-angle-left"></i> CPU硬件架构解析
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Mengge Liu</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
+<!-- 页面点击小红心 --> <script type="text/javascript" src="/js/clicklove.js"></script>

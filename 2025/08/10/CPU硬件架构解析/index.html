@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/silver/pace-theme-barber-shop.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.23.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="1.引言《Processor Microarchitecture An Implementation Perspective》 链接：https:&#x2F;&#x2F;dl.icdst.org&#x2F;pdfs&#x2F;files&#x2F;15b09def448c317556dc0fc412aee571.pdf 处理器微架构演进主要源自两个因素：  technology scaling  workload evolution   ###1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CPU硬件架构解析">
+<meta property="og:url" content="http://example.com/2025/08/10/CPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="Mengge&#39;s Blog">
+<meta property="og:description" content="1.引言《Processor Microarchitecture An Implementation Perspective》 链接：https:&#x2F;&#x2F;dl.icdst.org&#x2F;pdfs&#x2F;files&#x2F;15b09def448c317556dc0fc412aee571.pdf 处理器微架构演进主要源自两个因素：  technology scaling  workload evolution   ###1">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://intelcorp.scene7.com/is/image/intelcorp/purley-2s-configuration-block-diagram-16x9:1920-1080?wid=978&hei=550&fmt=webp-alpha">
+<meta property="og:image" content="https://www.intel.com/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-uma.png">
+<meta property="og:image" content="https://www.intel.com/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-2-snc.png">
+<meta property="og:image" content="https://www.intel.com/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-4-snc.png">
+<meta property="og:image" content="http://example.com/Users/rockyliu/Documents/%E6%8A%80%E6%9C%AF%E5%AE%9D%E5%85%B8/CPU/X86/AMD-9654.png">
+<meta property="og:image" content="http://example.com/Users/rockyliu/Documents/%E6%8A%80%E6%9C%AF%E5%AE%9D%E5%85%B8/CPU/X86/Genoa.png">
+<meta property="og:image" content="http://example.com/Users/rockyliu/Documents/%E6%8A%80%E6%9C%AF%E5%AE%9D%E5%85%B8/CPU/X86/NPS1.png">
+<meta property="og:image" content="http://example.com/Users/rockyliu/Documents/image-20250805145129441.png">
+<meta property="og:image" content="https://miro.medium.com/v2/resize:fit:700/1*R2swNw346XPUM3fwbnAKBw.png">
+<meta property="og:image" content="https://miro.medium.com/v2/resize:fit:640/format:webp/1*KMwBdGSYyB6F64mof-O7Lw.png">
+<meta property="og:image" content="http://example.com/Users/rockyliu/Documents/Roofline.png">
+<meta property="article:published_time" content="2025-08-10T10:18:29.000Z">
+<meta property="article:modified_time" content="2025-08-10T10:22:30.725Z">
+<meta property="article:author" content="Mengge Liu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://intelcorp.scene7.com/is/image/intelcorp/purley-2s-configuration-block-diagram-16x9:1920-1080?wid=978&hei=550&fmt=webp-alpha">
+
+
+<link rel="canonical" href="http://example.com/2025/08/10/CPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/10/CPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/","path":"2025/08/10/CPU硬件架构解析/","title":"CPU硬件架构解析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CPU硬件架构解析 | Mengge's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mengge's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/About/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">1.引言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-CPU%E5%BE%AE%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">1.2 CPU微体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-%E5%BE%AE%E6%9E%B6%E6%9E%84%E5%88%86%E7%B1%BB"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.2.1 微架构分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.1.2.</span> <span class="nav-text"></span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-X86"><span class="nav-number">2.</span> <span class="nav-text">2.X86</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Intel"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Intel</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-%E4%BA%A7%E5%93%81%E8%B7%AF%E6%A0%87%E6%BC%94%E8%BF%9B"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 产品路标演进</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-NUMA-%E6%9E%B6%E6%9E%84"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 NUMA 架构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-AMD"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 AMD</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 架构演进</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Chiplet%E6%8A%80%E6%9C%AF"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Chiplet技术</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-ARM"><span class="nav-number">3.</span> <span class="nav-text">3.ARM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 硬件架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-%E8%8A%AF%E7%89%87%E7%BB%84%E4%BB%B6"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 芯片组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-%E7%BB%84%E4%BB%B6%E5%8D%95%E5%85%83"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 组件单元</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">4.性能分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%88%86%E6%9E%90%E6%80%9D%E8%B7%AF"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 分析思路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">5.</span> <span class="nav-text">5.参考文献</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mengge Liu"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Mengge Liu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/10/CPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Mengge Liu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mengge's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CPU硬件架构解析 | Mengge's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CPU硬件架构解析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-08-10 18:18:29 / Modified: 18:22:30" itemprop="dateCreated datePublished" datetime="2025-08-10T18:18:29+08:00">2025-08-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>《Processor Microarchitecture An Implementation Perspective》</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://dl.icdst.org/pdfs/files/15b09def448c317556dc0fc412aee571.pdf">https://dl.icdst.org/pdfs/files/15b09def448c317556dc0fc412aee571.pdf</a></p>
+<p>处理器微架构演进主要源自两个因素：</p>
+<ul>
+<li><p>technology scaling</p>
+</li>
+<li><p>workload evolution</p>
+</li>
+</ul>
+<p>###1.1 Moore’s Law</p>
+<ul>
+<li>Moore, Gordon E. (1965). “Cramming more components onto integrated circuits” (PDF). Electronics Magazine. pp. 4.<ul>
+<li>“The complexity for minimum component costs has increased at a rate of roughly a factor of two per year.”</li>
+<li>Moore refined it to “every two years” in 1975</li>
+<li>Also quoted as “every 18 months” by David House, (referring to performance)</li>
+<li>Most popular formulation: #transistors&#x2F;IC</li>
+</ul>
+</li>
+<li>Carver Mead coined it as Moore’s law around 1970<ul>
+<li>– “Tall &amp; Thin engineers”</li>
+</ul>
+</li>
+<li>Ultimate limit of Moore’s Law<ul>
+<li>No one knows</li>
+<li>How to use the capability? Resource limit?</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-CPU微体系结构"><a href="#1-2-CPU微体系结构" class="headerlink" title="1.2 CPU微体系结构"></a>1.2 CPU微体系结构</h3><h4 id="1-2-1-微架构分类"><a href="#1-2-1-微架构分类" class="headerlink" title="1.2.1 微架构分类"></a>1.2.1 微架构分类</h4><p>按照一些相互正交的维度进行分类：</p>
+<ol>
+<li><p>Pipelined&#x2F;Nonpipelined Processors</p>
+<p>Pipelined提高了ILP，并且由于成本效益好，几乎所有的处理器都采用</p>
+</li>
+<li><p>In-Order&#x2F;Out-of-Order Processors</p>
+<p>Out-of-Order 需要更复杂的硬件设计，在乱序执行中，指令可以不按程序指定的顺序执行，减少阻塞，但对外表现的行为还是和顺序执行的处理器一样；</p>
+</li>
+<li><p>Scalar&#x2F;Superscalar Processors </p>
+<p>标量和超标量处理器，标量处理器的 IPC 最多为 1，因为只有一套执行单元，而不是标量处理器的就是超标量处理器，IPC 可以大于 1。</p>
+</li>
+<li><p>Vector Processors</p>
+<p>向量处理器可以使用一条向量指令处理多个元素的向量，也就是 SIMD，例如 Intel 的 AVX 指令就是 SIMD 指令；</p>
+</li>
+<li><p>Multicore Processors</p>
+<p>是否多核？多核处理器中每一个核心的硬件资源相对独立不共享</p>
+</li>
+<li><p>Multithreaded Processors</p>
+<p>是否多线程？多线程中的线程通常共用大部分的硬件资源</p>
+</li>
+</ol>
+<p><strong>流水线技术</strong></p>
+<p>![image-20250724163845529](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250724163845529.png)</p>
+<p>一条指令的生命周期分为五个阶段：</p>
+<p>取指（IF）——&gt;译码（ID）——&gt;重命名 &amp; 分发——&gt;执行（EXE）——&gt;访存（MEM）——&gt;写回（WB）</p>
+<p>《从入门到放弃：CPU流水线技术全解析》<a target="_blank" rel="noopener" href="https://juejin.cn/post/7401417746541068297">https://juejin.cn/post/7401417746541068297</a></p>
+<p>将访存单独作为一个阶段的考虑：</p>
+<ul>
+<li><p>假设访存延迟为0周期，即理想寄存器</p>
+</li>
+<li><p>地址计算（加法器）的路径和访存路径加起来太长</p>
+<ul>
+<li>拆分为两个阶段更均衡</li>
+</ul>
+<p>但在实际的处理器设计中, 上述假设不再成立</p>
+<p>访存操作一般需要多个周期；</p>
+<p>cache: 缓存的控制逻辑是个状态机；即使命中，状态机也需要经过若干个周期的控制才能读出数据</p>
+<p>访存路径上有很多地址寄存器，地址计算的延迟和资源开销并不明显</p>
+</li>
+</ul>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><p><a target="_blank" rel="noopener" href="https://xiaofeng.info//presentations/history_Intel_CPU.pdf">https://xiaofeng.info//presentations/history_Intel_CPU.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.agner.org/optimize/microarchitecture.pdf">https://www.agner.org/optimize/microarchitecture.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.mindshare.com/eLearning/Course/Intel_x86_Processor_and_Platform_Architecture_eLearning_Course">https://www.mindshare.com/eLearning/Course/Intel_x86_Processor_and_Platform_Architecture_eLearning_Course</a></p>
+<p>• Intel x86 CPU and Chipset Evolution<br>• Current Core and Xeon CPUs: Ice Lake, Cascade Lake, plus “Refresh” Variants<br>• X86 Instruction Set Architecture (ISA) and CPU Operating Modes<br>• Core and Xeon CPU Microarchitecture Differences<br>• Caches<br>• Platform Addressing<br>• Main Memory DRAM<br>• Ultra Path Interconnect (UPI)<br>• CPU Integrated Graphics<br>• CPU Integrated IO (IIO)<br>• Interrupt Handling<br>• Hardware Virtualization Support<br>• Platform Controller Hub (PCH) Features<br>• Power and Thermal Management<br>• CPU Performance Monitoring</p>
+<p><a target="_blank" rel="noopener" href="https://cdrdv2-public.intel.com/786255/786255_330119_ia-introduction-basics-paper.pdf">https://cdrdv2-public.intel.com/786255/786255_330119_ia-introduction-basics-paper.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.mindshare.com/files/ebooks/x86%20instruction%20set%20architecture.pdf">https://www.mindshare.com/files/ebooks/x86%20instruction%20set%20architecture.pdf</a></p>
+<h2 id="2-X86"><a href="#2-X86" class="headerlink" title="2.X86"></a>2.X86</h2><h3 id="2-1-Intel"><a href="#2-1-Intel" class="headerlink" title="2.1 Intel"></a>2.1 Intel</h3><h4 id="2-1-1-产品路标演进"><a href="#2-1-1-产品路标演进" class="headerlink" title="2.1.1 产品路标演进"></a>2.1.1 产品路标演进</h4><p>Intel x86 Core and Xeon Platform Background<br>o Intel 64 and IA-32 CPU lineage<br>§ 80386 to Ice Lake&#x2F;Cascade Lake<br>§ Core and Xeon CPUs Expected Next<br>o Ice Lake&#x2F;Cascade Lake Platform Examples<br>§ Gaming Desktop<br>§ 2-in-1 Laptop<br>§ Xeon Scalable CPU Server</p>
+<p>X86 Instruction Set Architecture (ISA)<br>o CPU Core Fetch&#x2F;Decode&#x2F;Execute Role<br>o X86 Instruction Basics<br>o Instruction Set Overview<br>§ General Purpose Instructions<br>§ Floating Point and SIMD Instructions<br>§ Program Flow Instructions<br>§ Hardware-Related Instructions<br>o X86 Register Set Overview<br>§ General Purpose Registers (GPRs)<br>§ X87&#x2F;MMX Registers<br>§ XMM&#x2F;YMM&#x2F;ZMM Registers<br>§ Segmentation Registers<br>§ Control Registers<br>§ Debug Registers<br>§ Model-Specific Registers (MSRs)<br>o X86 CPU Operating Modes<br>§ Real Mode<br>§ Protected Mode<br>§ Virtual-8086 Mode<br>§ System-Management Mode (SMM)<br>§ IA32e (Long) Mode</p>
+<p>![image-20250724114810496](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250724114810496.png)</p>
+<p>典型的Dual-socket systems</p>
+<p><img src="https://intelcorp.scene7.com/is/image/intelcorp/purley-2s-configuration-block-diagram-16x9:1920-1080?wid=978&hei=550&fmt=webp-alpha" alt="Intel® Xeon® Processor Scalable Family Block Diagram: 2S Configuration"></p>
+<h4 id="2-1-2-NUMA-架构"><a href="#2-1-2-NUMA-架构" class="headerlink" title="2.1.2 NUMA 架构"></a>2.1.2 NUMA 架构</h4><p><strong>Uniform Memory Access Domain</strong></p>
+<p><img src="https://www.intel.com/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-uma.png" alt="img"></p>
+<p> <strong>Sub-NUMA Clustering</strong></p>
+<p><img src="https://www.intel.com/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-2-snc.png" alt="img"></p>
+<p>​                       Figure 2 – Block Diagram Representing Domains Of sub-NUMA With Two Clusters</p>
+<p><img src="https://www.intel.com/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-4-snc.png" alt="img"></p>
+<p>​                         Figure 3 – Block Diagram Representing Domains Of sub-NUMA With Four Clusters</p>
+<h3 id="2-2-AMD"><a href="#2-2-AMD" class="headerlink" title="2.2 AMD"></a>2.2 AMD</h3><h4 id="2-2-1-架构演进"><a href="#2-2-1-架构演进" class="headerlink" title="2.2.1 架构演进"></a>2.2.1 架构演进</h4><p>![AMD CPU架构](&#x2F;Users&#x2F;rockyliu&#x2F;Documents&#x2F;技术宝典&#x2F;CPU&#x2F;X86&#x2F;AMD CPU架构.png)</p>
+<p>AMD EPYC 9004系列</p>
+<p>![image-20250723150813290](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250723150813290.png)</p>
+<p><img src="/Users/rockyliu/Documents/%E6%8A%80%E6%9C%AF%E5%AE%9D%E5%85%B8/CPU/X86/AMD-9654.png" alt="AMD-9654"></p>
+<p> 5TH GEN AMD EPYC™ PROCESSOR ARCHITECTURE</p>
+<p><a target="_blank" rel="noopener" href="https://www.amd.com/content/dam/amd/en/documents/epyc-business-docs/white-papers/5th-gen-amd-epyc-processor-architecture-white-paper.pdf">https://www.amd.com/content/dam/amd/en/documents/epyc-business-docs/white-papers/5th-gen-amd-epyc-processor-architecture-white-paper.pdf</a><br> I&#x2F;O DIE FEATURES</p>
+<p>![AMD-I:O die](&#x2F;Users&#x2F;rockyliu&#x2F;Documents&#x2F;技术宝典&#x2F;CPU&#x2F;X86&#x2F;AMD-I:O die.png)</p>
+<p>When three links between processors are used, an additional 16 PCIe lanes on each CPU are available for general I&#x2F;O, bringing the total I&#x2F;O capacity up to 160 lanes. When four links are configured, they can support a maximum theoretical bandwidth of 512 GB&#x2F;s between processors.</p>
+<ol>
+<li>当双路CPU使用G-links * 3 （48 Lanes）时，另外的16 PCIe lanes 可以用于标准I&#x2F;O，总的I&#x2F;O能力扩展到160 lanes;</li>
+<li>当双路CPU使用G-links * 4 （64 Lanes）时，CPU间支持最大双向理论带宽512GB&#x2F;s。</li>
+</ol>
+<p><img src="/Users/rockyliu/Documents/%E6%8A%80%E6%9C%AF%E5%AE%9D%E5%85%B8/CPU/X86/Genoa.png" alt="Genoa"></p>
+<p>Non-Uniform Memory Access (NUMA) architecture </p>
+<ul>
+<li>Different latencies</li>
+</ul>
+<p>​       depending on the proximity of a processor core to memory and I&#x2F;O controllers</p>
+<ul>
+<li>Same NUMA node provides uniform good performance,while use resources in differing nodes increases latencies.</li>
+</ul>
+<p>NUMA Setting </p>
+<p>NUMA Nodes Per Socket (NPSx)<br>• NPS4: Four NUMA nodes per socket, one per quadrant.<br>  o Requires symmetrical CCD configuration across all quadrants of the SoC.<br>  o Preferred Interleaving: 2-channel interleaving using channels from each quadrant.<br>• NPS2: Two NUMA nodes per socket, one per left&#x2F;right half of the SoC.<br>  o Requires symmetrical CCD configuration across left&#x2F;right halves of the SoC.<br>  o Preferred Interleaving: 4-channel interleaving using channels from each half.<br>• NPS1: One NUMA node per socket.<br>  o Available for any CCD configuration in the SoC.<br>  o Preferred Interleaving: 8-channel interleaving using all channels in the socket.<br>• NPS0: One NUMA node per system.<br>  o Available only on a 2P system.<br>  o Preferred Interleaving: 16-channel interleaving using all channels in the system.<br>Note: If the CCD configuration is altered by software (e.g., BIOS Setup Option), NPS4 and NSP2<br>options may not be available based on the Symmetry requirements noted above.</p>
+<p><img src="/Users/rockyliu/Documents/%E6%8A%80%E6%9C%AF%E5%AE%9D%E5%85%B8/CPU/X86/NPS1.png" alt="NPS1"></p>
+<p>![image-20250723175300806](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250723175300806.png)</p>
+<p>![image-20250723175400320](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250723175400320.png)</p>
+<p>![image-20250723175602458](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250723175602458.png)</p>
+<p>![image-20250723175515519](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250723175515519.png)</p>
+<p>引发问题？</p>
+<p>   1.NUMA是个好东西，为啥有的业务场景抗拒开启NPS？</p>
+<ul>
+<li><p>跨NUMA分配CPU导致远程访问性能损耗，出现性能分层</p>
+</li>
+<li><p>不同业务间共享核导致Cache频繁加载、互相污染开销增加，可用性和延时增加</p>
+</li>
+<li><p>不同优先级和不同资源敏感程度 业务pod在节点上数量分配不均衡，导致竞争开销</p>
+</li>
+<li><p>节点上其他资源的竞争（IO、网络、内存）</p>
+<p> 2.开启NPS后会增加Latency,会造成哪些影响？如何进行性能调优？</p>
+</li>
+</ul>
+<p>Infinity Fabric links</p>
+<p> External Global Memory Interconnect [xGMI] links </p>
+<ul>
+<li>Dual-socket systems</li>
+</ul>
+<p>​       4 xGMI ：4x16&#x3D;64 PCIe lanes from each socket for Infinity Fabric connections.  leave 64 PCIe lanes each socket&#x3D; 64x2&#x3D;128 lanes </p>
+<p>​       3 xGMI :  In these cases, 160 lanes for PCIe (80 per socket) </p>
+<h3 id="2-3-Chiplet技术"><a href="#2-3-Chiplet技术" class="headerlink" title="2.3 Chiplet技术"></a>2.3 Chiplet技术</h3><p>​	<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/604721264">Chiplet</a> 即小芯粒，它将一类满足特定功能的 die（裸片），通过 die-to-die 内部互联技术将多个模块芯片与底层基础芯片封装在一起，形成一个系统芯片。</p>
+<img src="/Users/rockyliu/Documents/image-20250805145129441.png" alt="image-20250805145129441" style="zoom:80%;" />
+
+<ul>
+<li><p>大面积芯片降低成本提升良率</p>
+<p>随着先进制程推进，研发成本持续走高。Chiplet 将单颗 SOC 的不同功能模块拆分成独立的小芯粒（即 Chiplet）， 大大缩小了单颗 die 的面积，起到提升良率、降低成本的作用。</p>
+</li>
+<li><p>小芯片模块化，实现IP复用，加速芯片迭代</p>
+</li>
+<li><p>Die to die的高速互联（载板或者Interposer互联）“堆料“</p>
+<p>Interposer 的材质又分为硅基、有机两种。若芯片是平铺在 封装的衬底上，则称为 2.5D 封装，若是芯片之间堆叠封装，则称为 3D 封装。</p>
+<p>![image-20250805145518266](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;2.5D:3D封装.png)</p>
+<p>芯片厂可以将多颗计算核心die进行合封，提高芯片整体性能。</p>
+</li>
+</ul>
+<h2 id="3-ARM"><a href="#3-ARM" class="headerlink" title="3.ARM"></a>3.ARM</h2><h3 id="3-1-硬件架构"><a href="#3-1-硬件架构" class="headerlink" title="3.1 硬件架构"></a>3.1 硬件架构</h3><p>《Kunpeng 920: The First 7-nm Chiplet-Based 64-Core ARM SoC for Cloud Services》</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/9444893">https://ieeexplore.ieee.org/document/9444893</a></p>
+<p>知乎解读：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/654058158">https://zhuanlan.zhihu.com/p/654058158</a></p>
+<p>Kunpeng 920 采用乐高式架构设计。</p>
+<p>![image-20250725160244189](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250725160244189.png)</p>
+<p>双路使用huawei的Hydra，接口提供24-lane的SerDes</p>
+<p>![image-20250725160326915](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250725160326915.png)</p>
+<h4 id="3-1-1-芯片组件"><a href="#3-1-1-芯片组件" class="headerlink" title="3.1.1 芯片组件"></a>3.1.1 芯片组件</h4><p>![image-20250724201151569](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250724201151569.png)</p>
+<h4 id="3-1-2-组件单元"><a href="#3-1-2-组件单元" class="headerlink" title="3.1.2 组件单元"></a>3.1.2 组件单元</h4><ul>
+<li><p>片上总线：Cache一致性总线 Hydra接口级联</p>
+</li>
+<li><p>CCL：内核集群</p>
+<p>华为鲲鹏920的每个内核集群（CCL）都由4个内核和专用L2 Cache组成。华为鲲鹏920的CCL之间支持完全一致性。总线上的其他功能单元可以一致性地访问每个CCL的缓存中的最新数据。</p>
+</li>
+</ul>
+<p>![image-20250725151018554](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250725151018554.png)</p>
+<ul>
+<li>ICL：I&#x2F;O集群</li>
+</ul>
+<p>![image-20250725151216449](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250725151216449.png)</p>
+<p>一个典型的ICL包括以下组成部分：</p>
+<ol>
+<li>多个设备（如图2-9所示）；</li>
+<li>0个或1个SMMU（System Memory Management System），为设备提供地址转换和访问保护功能；</li>
+<li>1个系统总线接口</li>
+<li>1个Sysctrl或Subctrl，用于固件初始化和公共配置；</li>
+<li>1个Dispatch，为访问设备寄存器空间提供物理地址（PA）译码；</li>
+<li>0个或多个Scheduler，当设备数量较多时，Scheduler可以合并各设备的内存访问流量。</li>
+</ol>
+<ul>
+<li><p>SCCL：超级内核集群</p>
+<p>华为鲲鹏920的每个SCCL包括6个CCL、2个ICL和4个DDR控制器。DDR控制器也可以看做一个设备。SCCL内部结构如图2-10所示。</p>
+<p>![image-20250725152900850](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250725152900850.png)</p>
+</li>
+<li><p>SICL：供超级I&#x2F;O集群</p>
+<p>每个SICL由4个ICL、1个Hydra接口和1个独立的IMU组成。</p>
+<p>![image-20250725152955168](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250725152955168.png)</p>
+</li>
+</ul>
+<p>3.2 内存子系统</p>
+<p>![image-20250725153128420](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250725153128420.png)</p>
+<h2 id="4-性能分析"><a href="#4-性能分析" class="headerlink" title="4.性能分析"></a>4.性能分析</h2><h3 id="4-1-前置知识"><a href="#4-1-前置知识" class="headerlink" title="4.1 前置知识"></a>4.1 前置知识</h3><ol>
+<li><p>熟悉CPU硬件，关注微架构级别的硬件演进和主流CPU演进：</p>
+<p>a. X86 (Intel &amp; AMD)、ARM（Kunpeng）等主流CPU厂商产品：</p>
+<p>i. 基本参数</p>
+<p> ii. 微架构设计 </p>
+<p>iii. 各级（core、uncle、offcore）PMC含义、获取和应用方式（关键指标计算）</p>
+<p>b. CPU体系结构</p>
+<p>i. CPU流水线技术</p>
+<p>ii. 理解CPU的页表机制、预取机制；</p>
+<p>iii. 流水线+超标量+多发射技术如何并行执行指令提高效率</p>
+<p>iv. 理解分支预测、</p>
+<p>v. 内存组件的技术细节</p>
+<p>vi. PCIe组件技术细节</p>
+</li>
+<li><p>了解Linux内核个和相应分析工具</p>
+<p>a.熟悉Linux 进程和线程管理和调度</p>
+<p>b. 掌握Linux的性能分析与调优方法，能够进行函数级问题定位；</p>
+<p>i. 熟练使用 FlameGraph、perf、Prometheus等工具；</p>
+<p>ii. Pstack.      Gdb  attach </p>
+<p>iii. Ebpf工具、bpftrace 进行内核路径trace</p>
+</li>
+<li><p>了解公司业务的性能画像,能够通过Specint等Benchmark评估硬件性能：</p>
+<p>a. 熟悉各类服务器性能指标的含义和获取方式,并据此评估业务性能需求；</p>
+<p>i. 硬件上:CPU利用率、IPC、各级cache&#x2F;TLBmiss率、branch和branchmiss数、内存占用、内存带宽、内存延迟、UPI&#x2F;xGMI带宽、TMA指标、网卡带宽;</p>
+<p>ii. 软件上:CPUuser&#x2F;sys&#x2F;软&#x2F;硬中断利用率占比、整机load、网卡丢包、上下文切换次数;</p>
+<p>b.理解各项基本单元测试的目的、方法,能够正确评估测试结果反映的性能水平：</p>
+<p>  i. 不同读写比例下的随机读写内存带宽-时延曲线;</p>
+<p>  ii. 原子操作的指令开销;</p>
+<p>  iii .Specint的各子项负载的工作pattern和性能需求;</p>
+<p>c.掌握常见性能优化方式,帮助提高业务性能:</p>
+<p>  i. 正确使用大页内存、透明大页;</p>
+<p>  ii. 合理绑核,合理配置实例线程数量&#x2F;内存大小;</p>
+<p>  iii. 正确配置网络相关参数(网卡队列数量、大小、中断绑核、网卡PCle配置);</p>
+</li>
+</ol>
+<h3 id="4-2-分析思路"><a href="#4-2-分析思路" class="headerlink" title="4.2 分析思路"></a>4.2 分析思路</h3><p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9C%A8%E6%A1%B6%E7%90%86%E8%AB%96">木桶效应</a></p>
+<p>首先要识别性能瓶颈，通过监控测量分析定位性能瓶颈，才能结合场景对症下药（理解工作原理）</p>
+<p>在分析过程中要明确关注哪些性能指标，这个是性能分析的关键：</p>
+<ul>
+<li><p>微架构分析Microarchitecture analysis ：CPU内部瓶颈（bottlenecks）</p>
+</li>
+<li><p>锁分析Lock analysis：锁竞争和等待时间</p>
+</li>
+<li><p>IO分析：IO操作瓶颈</p>
+</li>
+<li><p>调度分析：由于调度产生的瓶颈</p>
+</li>
+<li><p>CPU限制分析：识别由于CPU竞争导致的瓶颈</p>
+</li>
+<li><p>内存边界分析：内存碎片、内存总线限制</p>
+</li>
+</ul>
+<p>微架构分析：</p>
+<p>​	现代CPU通常采用五级流水，通常包含五个执行阶段。每条指令可以分解为与流水线阶段对应的微操作：IF、ID、EXEC、MEM 和 WB。</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*R2swNw346XPUM3fwbnAKBw.png" alt="img"></p>
+<p>可以使用<code>perf stat</code>命令来检查：</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*KMwBdGSYyB6F64mof-O7Lw.png"></p>
+<p>每个指令周期的指令数越多，应用程序可以完成的工作就越多。</p>
+<p>​	</p>
+<p><strong>CPU数据缓存分析</strong></p>
+<p>CPU数据缓存分析可以通过<code>perf stat -e L1-dcache-load-misses,L1-dcache-loads</code>来验证。</p>
+<p><strong>CPU分支预测分析</strong></p>
+<p>CPU <a target="_blank" rel="noopener" href="https://blog.cloudflare.com/branch-predictor/">分支预测</a>的指标可以通过 来检查<code>perf stat -e branches,branch-misses</code></p>
+<p>TLB 缓存和 FLOPS 是潜在的瓶颈。CPU 通常将虚拟地址到物理地址的转换缓存在 TLB 中。当 TLB 缓存未命中时，CPU 需要遍历内核页表，根据引用的虚拟地址计算物理地址。这个过程非常耗时。使用大页可以减轻 TLB 的压力。</p>
+<p>Flame graphs 火焰图 </p>
+<p>IPC和CPU频率的关系</p>
+<p>由于 IPC是衡量微架构性能优劣的指标</p>
+<p>内存密集型应用程序通常以低 IPC (0-1) 为特征，而计算密集型工作负载往往具有高 IPC (4-6)。</p>
+<p>Linux perf 用户可以通过运行以下命令测量其工作负载的 IPC：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">perf <span class="built_in">stat</span> -e cycles,instructions -- a.exe</span></span><br><span class="line">2369632 cycles</span><br><span class="line">1725916 instructions # 0,73 insn per cycle</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或更简单地:</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">perf <span class="built_in">stat</span> ./a.exe</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>问题：</p>
+<p>1.CPU核心时钟和参考时钟的区别？</p>
+<p>2.当你提高频率时， IPC（每个周期内的指令数）是上升、下降还是保持不变？</p>
+<p>3.Roofline 性能模型是一个以吞吐量为导向的性能模型</p>
+<p>硬件有两个主要限制：计算速度 (峰值计算性能， FLOPS) 和数据移动速度 (峰值内存带宽， GB&#x2F;s)。</p>
+<p>算术强度 (Arithmetic Intensity, AI) 是 FLOPS 和字节之间的比率</p>
+<img src="/Users/rockyliu/Documents/Roofline.png" alt="image-20250805172347808" style="zoom:67%;" />
+
+<p>图 中的 roofline 图将两个应用程序 A 和 B 的性能与硬件限制进行了对比。应用程序 A 的运算强度较低，其性能受内存带宽限制，应用程序 B 的计算密集型程度更高，因此不会受到内存瓶颈的太大影响。</p>
+<h2 id="5-参考文献"><a href="#5-参考文献" class="headerlink" title="5.参考文献"></a>5.参考文献</h2><p>1.<a target="_blank" rel="noopener" href="https://jackiedinh8.medium.com/cpu-performance-analysis-1e8f90ad2d94">CPU Performance Analysis</a></p>
+<p>2.<a target="_blank" rel="noopener" href="https://miro.medium.com/v2/resize:fit:640/format:webp/1*KMwBdGSYyB6F64mof-O7Lw.png">《Performance Analysis and Tuning on Modern CPU》</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/10/%E5%AE%95%E6%9C%BA%E6%95%85%E9%9A%9C%E8%AF%8A%E6%96%AD/" rel="prev" title="宕机故障诊断">
+                  <i class="fa fa-angle-left"></i> 宕机故障诊断
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/10/GPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/" rel="next" title="GPU硬件架构解析">
+                  GPU硬件架构解析 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Mengge Liu</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
+<!-- 页面点击小红心 --> <script type="text/javascript" src="/js/clicklove.js"></script>
