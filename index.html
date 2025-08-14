@@ -1,1685 +1,191 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/silver/pace-theme-barber-shop.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.23.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
-
-    <meta property="og:type" content="website">
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Mengge's Blog</title><meta name="author" content="Mengge Liu"><meta name="copyright" content="Mengge Liu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
 <meta property="og:title" content="Mengge&#39;s Blog">
 <meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="Mengge&#39;s Blog">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/butterfly-icon.png">
 <meta property="article:author" content="Mengge Liu">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Mengge's Blog",
+  "url": "http://example.com/"
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
 
-
-<link rel="canonical" href="http://example.com/">
-
-
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"index.html","title":""}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Mengge's Blog</title>
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
   
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
 
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
 
-
-
-
-
-
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
-<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
-
-  
-
-
-
-
-  <script src="/js/third-party/pace.js" defer></script>
-
-
-  
-
-
-
-
-
-  <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
-
-  <main class="main">
-    <div class="column">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <h1 class="site-title">Mengge's Blog</h1>
-      <i class="logo-line"></i>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="Search" role="button">
-    </div>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/About/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a></li>
-  </ul>
-</nav>
-
-
-
-
-</header>
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
         
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
   
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-overview-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          Table of Contents
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Mengge\'s Blog',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Mengge's Blog</span></a></span><div id="menus"></div></nav><div id="site-info"><h1 id="site-title">Mengge's Blog</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/08/10/GPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/" title="GPU硬件架构解析">GPU硬件架构解析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-08-10T10:18:38.000Z" title="Created 2025-08-10 18:18:38">2025-08-10</time></span></div><div class="content">1. 引言 AI计算需求与硬件挑战 当我尝试训练一个大模型时，通常会遇到两个挑战：  这个模型能否在现有硬件环境中运行？  需要多长时间才能完成一个数据集的训练？ 这个两个挑战的核心也正式是大模型的扩展定律（Scaling Law）中提到的队模型表现的两个因素：模型规模和数据规模。   Scaling Law ​    在 AI 模型的发展过程中，Scaling Law（扩展定律）成为推动性能提升的重要理论基础。根据 Scaling Law，当模型参数、训练数据和硬件配置同步增加时，AI 模型的能力会随之提升。   ​       硬件挑战 ​        a. 摩尔定律增速放缓、晶体管尺寸物理极限、能耗不断增加。 ​	b. 存储墙：存储器的数据访问速度跟不上计算处理速度。 ​	c. 能耗墙：随着芯片性能的提升，能耗和散热问题成为限制进一步性能提升的主要因素。  GPU在AI计算中的核心地位  本文架构解析思路 主要从以下三个维度进行解析：  系统维度 硬件组件层 → 子系统层 → 系统层 → 集群层  ↓                           ↓        ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/08/10/CPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/" title="CPU硬件架构解析">CPU硬件架构解析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-08-10T10:18:29.000Z" title="Created 2025-08-10 18:18:29">2025-08-10</time></span></div><div class="content">1.引言《Processor Microarchitecture An Implementation Perspective》 链接：https://dl.icdst.org/pdfs/files/15b09def448c317556dc0fc412aee571.pdf 处理器微架构演进主要源自两个因素：  technology scaling  workload evolution   ###1.1 Moore’s Law  Moore, Gordon E. (1965). “Cramming more components onto integrated circuits” (PDF). Electronics Magazine. pp. 4. “The complexity for minimum component costs has increased at a rate of roughly a factor of two per year.” Moore refined it to “every two years” in 1975 Also quoted as “...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/08/10/%E5%AE%95%E6%9C%BA%E6%95%85%E9%9A%9C%E8%AF%8A%E6%96%AD/" title="宕机故障诊断">宕机故障诊断</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-08-10T08:13:08.000Z" title="Created 2025-08-10 16:13:08">2025-08-10</time></span></div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/05/22/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B5%8B%E8%AF%95%E4%B8%80%E6%9C%AC%E9%80%9A/" title="服务器测试一本通">服务器测试一本通</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-05-22T15:19:39.000Z" title="Created 2025-05-22 23:19:39">2025-05-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tech/">Tech</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tech/AI-Infra/">AI Infra</a></span></div><div class="content">服务器测试一本通1. 前言1.1 编写目的​	本文件旨在为服务器整机系统测试提供系统化、标准化的测试指导和操作规范。通过明确各部件及整机维度的测试内容、方法和要求，确保服务器产品在出厂前能够全面、有效地验证其功能、性能、稳定性、兼容性和安全性，提升产品质量，降低售后风险，为研发、测试及运维等相关人员提供权威的参考依据。 1.2 适用范围​	本文件适用于所有型号服务器产品的整机系统测试，包括但不限于X86、ARM等不同架构的服务器。适用对象涵盖服务器研发、测试、生产、质量管理等相关部门，适用于新产品开发、批量生产、版本升级及定制化项目的系统级测试工作。 1.3 参考标准与文档 《GB&#x2F;T 20273-2006 信息技术 服务器通用规范》 《GB&#x2F;T 28181-2016 信息安全技术 网络和终端设备通用要求》 《ISO&#x2F;IEC 9126 软件工程 产品质量》 《SPEC CPU Benchmark Documentation》 《JEDEC DDR5 SDRAM 标准》 公司内部《服务器硬件测试规范》 公司内部《服务器生产测试流程》 相关操作系统及硬件...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/05/15/%E6%9C%8D%E5%8A%A1%E5%99%A8-JDM%E6%A8%A1%E5%BC%8F/" title="服务器-JDM模式">服务器-JDM模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-05-15T13:55:21.000Z" title="Created 2025-05-15 21:55:21">2025-05-15</time></span></div><div class="content">退一步显然没有海阔天空，但进一步也没有成熟经验。在此之前，科技产业只有两种IT供应链模式：“产品型”的OEM和“定制型”的ODM。前者是我（设备供应商）卖什么，你就只能买什么；后者是我（甲方客户）买什么，你就只能卖什么。 JDM模式全称是Joint Design Manufacture联合开发模式 </div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/05/14/LLM-Interview-Note/" title="LLM_Interview_Note">LLM_Interview_Note</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-05-14T14:27:14.000Z" title="Created 2025-05-14 22:27:14">2025-05-14</time></span></div><div class="content">1.当训练推理卡规模倍增的情况下，最容易产生瓶颈的位置可能是什么？a.请展开分析产生的原因b.对于此类问题，有什么优化或者缓解的方案LLM训练&amp;推理相关问题  当训练推理卡规模倍增的情况下，最容易产生瓶颈的位置可能是什么？a. 请展开分析产生的原因b. 对于此类问题，有什么优化或者缓解方案● 主要瓶颈位置及原因 网络通信带宽瓶颈当训练推理卡规模倍增时，网络通信往往成为首要瓶颈。在分布式训练中，每个GPU完成计算后需与其他设备交换梯度信息，形成全局更新。随着设备数量增加，通信量可能呈平方或线性增长，而网络基础设施提升通常不成比例。这导致大量GPU在计算完成后需等待梯度同步，显著降低整体训练效率。特别是在大批量训练时，梯度同步时间可能占据总训练时间的30%以上。  2.内存带宽瓶颈现代GPU计算核心数量增长速度通常快于内存带宽提升。在大模型训练过程中，权重、激活值、梯度等数据需在内存与计算单元间频繁传输，内存带宽不足会造成”内存墙”问题。测试表明，大型模型训练时GPU计算核心利用率可能仅有40-60%，主要受限于内存带宽，而非计算能力。这种情况下，即使增加更多GPU，性能提升...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/05/14/hello-world/" title="Hello World">Hello World</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-05-14T12:47:02.818Z" title="Created 2025-05-14 20:47:02">2025-05-14</time></span></div><div class="content">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;  More info: Writing Run server1$ hexo server  More info: Server Generate static files1$ hexo generate  More info: Generating Deploy to remote sites1$ hexo deploy  More info: Deployment </div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/04/29/%E6%88%91%E7%9A%84450MT%E6%8F%90%E8%BD%A6%E6%97%A5%E8%AE%B0/" title="我的450MT提车日记">我的450MT提车日记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-04-28T16:24:14.000Z" title="Created 2025-04-29 00:24:14">2025-04-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Life/">Life</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Life/Motocycle/">Motocycle</a></span></div><div class="content">初识450mt 标准版 “我妄想骑着我的烂摩托，去转一转…”，买摩托的想法从2023开始，一直想搞一辆摩托骑；于是在24年初报考了驾校，将驾驶证转到了北京，经历了一个月的忙碌，刘师傅终于可以合法上路了，奈何没有车；那下一步就是买车？又陷入了选择困难，虽然年轻人都喜欢仿赛（骑最猛的车，割最大的痔疮 哈哈），巡航那更不行（咖啡太苦，上班喝喝还行…)，所以对于一个豫西小伙来说，看惯山山水水，骨子里还是有点冒险精神，那最后只有ADV了，毕竟（Adventure Begins Where The Road Ends.），那就开整呗~开整肯定没那那么快，必须先考察一波。每天晚饭日常遛弯的首要任务就是看车，瞧瞧大佬都买什么车，看了一圈Kwaisake nijia400不下10辆（都是rich man）,啥配色都有；其次就是巡航，咖啡车还是上档次，占停车场半壁江山；ADV瞅了一圈，都不咋喜欢，主要排量太大腿短驾驭不了。总结一下，有点乱花渐欲迷人眼了,没我的梦中情车，看来还要寻觅一番…这里搞几张大佬爱车帅照，搞个简易车展…      .elqdtosuotkp{zoom:20%;}     .qt...</div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Mengge Liu</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/10/GPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/" title="GPU硬件架构解析">GPU硬件架构解析</a><time datetime="2025-08-10T10:18:38.000Z" title="Created 2025-08-10 18:18:38">2025-08-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/10/CPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/" title="CPU硬件架构解析">CPU硬件架构解析</a><time datetime="2025-08-10T10:18:29.000Z" title="Created 2025-08-10 18:18:29">2025-08-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/10/%E5%AE%95%E6%9C%BA%E6%95%85%E9%9A%9C%E8%AF%8A%E6%96%AD/" title="宕机故障诊断">宕机故障诊断</a><time datetime="2025-08-10T08:13:08.000Z" title="Created 2025-08-10 16:13:08">2025-08-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/22/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B5%8B%E8%AF%95%E4%B8%80%E6%9C%AC%E9%80%9A/" title="服务器测试一本通">服务器测试一本通</a><time datetime="2025-05-22T15:19:39.000Z" title="Created 2025-05-22 23:19:39">2025-05-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/15/%E6%9C%8D%E5%8A%A1%E5%99%A8-JDM%E6%A8%A1%E5%BC%8F/" title="服务器-JDM模式">服务器-JDM模式</a><time datetime="2025-05-15T13:55:21.000Z" title="Created 2025-05-15 21:55:21">2025-05-15</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>Categories</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Life/"><span class="card-category-list-name">Life</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Life/Motocycle/"><span class="card-category-list-name">Motocycle</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tech/"><span class="card-category-list-name">Tech</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tech/AI-Infra/"><span class="card-category-list-name">AI Infra</span><span class="card-category-list-count">1</span></a></li></ul></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/server/" style="font-size: 1.1em; color: #999">server</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>Archives</span>
+      
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/08/">
+            <span class="card-archive-list-date">
+              August 2025
+            </span>
+            <span class="card-archive-list-count">3</span>
+          </a>
         </li>
-        <li class="sidebar-nav-overview">
-          Overview
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/05/">
+            <span class="card-archive-list-date">
+              May 2025
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
         </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Mengge Liu"
-      src="/images/avatar.png">
-  <p class="site-author-name" itemprop="name">Mengge Liu</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives/">
-          <span class="site-state-item-count">8</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-          <a href="/categories/">
-        <span class="site-state-item-count">4</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-          <a href="/tags/">
-        <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-
-        </div>
-      </div>
-    </div>
-
-    
-  </aside>
-
-
-    </div>
-
-    <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/10/GPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Mengge Liu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/10/GPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">GPU硬件架构解析</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
       
-
-      <time title="Created: 2025-08-10 18:18:38 / Modified: 18:21:36" itemprop="dateCreated datePublished" datetime="2025-08-10T18:18:38+08:00">2025-08-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><ul>
-<li><p>AI计算需求与硬件挑战</p>
-<p>当我尝试训练一个大模型时，通常会遇到两个挑战：</p>
-<ol>
-<li><p>这个模型能否在现有硬件环境中运行？</p>
-</li>
-<li><p>需要多长时间才能完成一个数据集的训练？</p>
-<p>这个两个挑战的核心也正式是大模型的扩展定律（Scaling Law）中提到的队模型表现的两个因素：模型规模和数据规模。</p>
-</li>
-</ol>
-<p>Scaling Law</p>
-<p>​    在 AI 模型的发展过程中，Scaling Law（扩展定律）成为推动性能提升的重要理论基础。根据 Scaling Law，当模型参数、训练数据和硬件配置同步增加时，AI 模型的能力会随之提升。</p>
-</li>
-</ul>
-<p>​       硬件挑战</p>
-<p>​        a. 摩尔定律增速放缓、晶体管尺寸物理极限、能耗不断增加。</p>
-<p>​	b. 存储墙：存储器的数据访问速度跟不上计算处理速度。</p>
-<p>​	c. 能耗墙：随着芯片性能的提升，能耗和散热问题成为限制进一步性能提升的主要因素。</p>
-<ul>
-<li><p>GPU在AI计算中的核心地位</p>
-</li>
-<li><p>本文架构解析思路</p>
-<p>主要从以下三个维度进行解析：</p>
-<ul>
-<li><p>系统维度<br> 硬件组件层 → 子系统层 → 系统层 → 集群层<br>  ↓                           ↓                   ↓               ↓<br> GPU核心          GPU模组   AI服务器   AI集群</p>
-</li>
-<li><p>性能维度</p>
-<p> 计算瓶颈 → 内存瓶颈 → 存储瓶颈 → 网络瓶颈<br> ↓                      ↓                    ↓                   ↓<br> GPU算力    内存带宽           存储IO    网络延迟<br> ↓                      ↓                    ↓                   ↓<br> FLOPS         带宽&#x2F;延迟          IOPS     吞吐量&#x2F;延迟</p>
-</li>
-<li><p>扩展维度</p>
-<p> 单GPU → 多GPU → 单节点 → 多节点 → 大规模集群<br>   ↓                   ↓               ↓                 ↓                 ↓<br> 计算密度  互联带宽  节点密度   网络带宽    系统规模</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="2-GPU核心架构"><a href="#2-GPU核心架构" class="headerlink" title="2. GPU核心架构"></a>2. GPU核心架构</h2><h3 id="2-1-单GPU内部结构"><a href="#2-1-单GPU内部结构" class="headerlink" title="2.1 单GPU内部结构"></a>2.1 单GPU内部结构</h3><ul>
-<li><p>计算单元 (CUDA核心、张量核心)</p>
-</li>
-<li><p>内存层次 (寄存器、共享内存、L2缓存、显存)</p>
-</li>
-<li><p>互联结构 (PCIe、NVLink)</p>
-</li>
-</ul>
-<h3 id="2-2-多GPU扩展方式"><a href="#2-2-多GPU扩展方式" class="headerlink" title="2.2  多GPU扩展方式"></a>2.2  多GPU扩展方式</h3><p>单卡GPU形态</p>
-<table>
-<thead>
-<tr>
-<th>形态</th>
-<th>规格</th>
-<th align="left">版本演进</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>PCIe卡</td>
-<td><img src="./Snipaste_2025-08-04_15-33-27.png" style="zoom:40%;" ></td>
-<td align="left">全高全长FHFL</td>
-<td></td>
-</tr>
-<tr>
-<td>SXM卡</td>
-<td><img src="https://l4rz.net/running-nvidia-sxm-gpus-in-consumer-pcs/images/sxm4-vicor-preso.jpg" style="zoom:25%;" /></td>
-<td align="left">SXM 1.0 Pascal <br>SXM 2.0 &amp; 3.0 Volta <br>SXM 4.0 Ampere <br>SXM 5.0 Hopper</td>
-<td><em>Server PCI Express Module</em></td>
-</tr>
-<tr>
-<td>OAM卡</td>
-<td><img src="/Users/rockyliu/Documents/Snipaste_2025-08-04_16-09-27.png" style="zoom:45%;" /></td>
-<td align="left">OAM 1.0  2019.07.13<br>OAM 1.1 2020.07.22<br>OAM 1.5 2022.02.23<br>OAM 2.0 2023.09.14</td>
-<td><em>OCP Accelerator Module</em></td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>单卡到多卡的技术路径</p>
-<p>常见三种GPU形态，但是在实际使用中很少出现单卡场景，通常搭配两卡、四卡及八卡使用；</p>
-<ul>
-<li><p>多卡物理形态</p>
-<table>
-<thead>
-<tr>
-<th>形态</th>
-<th>拓扑结构</th>
-<th>规格</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>PCIe 多卡</td>
-<td></td>
-<td><img src="/Users/rockyliu/Documents/PCIe*8.png" style="zoom:35%;" /></td>
-<td></td>
-</tr>
-<tr>
-<td>HGX</td>
-<td><img src="/Users/rockyliu/Documents/HGX.png" style="zoom:50%;" /></td>
-<td><a target="_blank" rel="noopener" href="https://www.nvidia.com/en-us/data-center/hgx/">HGX-Platform</a> 8卡<img src="https://developer-blogs.nvidia.com/wp-content/uploads/2020/05/HGX_A100_8_way_3QTR_Front_Left-Edit-1-625x417.jpg" style="zoom:45%;" />&#x2F;&gt;</td>
-<td>该基板搭载：<br>i.8 &#x2F;4 个 NVIDIA GPU <br>ii.6 个 NVSwitch 节点。<br>(*Ps:*NVSwitch数量不固定)</td>
-</tr>
-<tr>
-<td>UBB</td>
-<td><img src="/Users/rockyliu/Documents/UBB8.png" alt="image-20250804172853058" style="zoom:20%;" /></td>
-<td><img src="https://www.servethehome.com/wp-content/uploads/2025/06/AMD-Instinct-MI350X-UBB-8-GPU.jpg" style="zoom:25%;" /></td>
-<td><em>Universal Baseboard</em></td>
-</tr>
-</tbody></table>
-<p><a target="_blank" rel="noopener" href="https://developer-blogs.nvidia.com/wp-content/uploads/2020/05/HGX_A100_8_way_3QTR_Front_Left-Edit-1-625x417.jpg">https://developer-blogs.nvidia.com/wp-content/uploads/2020/05/HGX_A100_8_way_3QTR_Front_Left-Edit-1-625x417.jpg</a></p>
-<p>GPU集群拓扑结构</p>
-</li>
-</ul>
-</li>
-<li><p>带宽与延迟挑战</p>
-</li>
-</ul>
-<h2 id="3-AI服务器系统架构"><a href="#3-AI服务器系统架构" class="headerlink" title="3. AI服务器系统架构"></a>3. AI服务器系统架构</h2><h3 id="3-1-硬件组件组成"><a href="#3-1-硬件组件组成" class="headerlink" title="3.1 硬件组件组成"></a>3.1 硬件组件组成</h3><ul>
-<li><p>CPU与系统内存</p>
-</li>
-<li><p>GPU模组与显存</p>
-</li>
-<li><p>存储系统 (NVMe SSD)</p>
-</li>
-<li><p>网络接口 (InfiniBand&#x2F;RoCE)</p>
-</li>
-</ul>
-<h3 id="3-2-互联技术对比"><a href="#3-2-互联技术对比" class="headerlink" title="3.2 互联技术对比"></a>3.2 互联技术对比</h3><ul>
-<li><p>PCIe vs NVLink vs InfiniBand</p>
-</li>
-<li><p>GPU Direct RDMA技术</p>
-</li>
-<li><p>数据传输优化策略</p>
-</li>
-</ul>
-<h2 id="4-服务器形态与部署"><a href="#4-服务器形态与部署" class="headerlink" title="4. 服务器形态与部署"></a>4. 服务器形态与部署</h2><h3 id="4-1-服务器类型"><a href="#4-1-服务器类型" class="headerlink" title="4.1 服务器类型"></a>4.1 服务器类型</h3><ul>
-<li><p>紧耦合型 (DGX系列)</p>
-</li>
-<li><p>模块化型 (OAM&#x2F;OCP标准)</p>
-</li>
-<li><p>定制化解决方案</p>
-</li>
-</ul>
-<h3 id="4-2-散热与电源"><a href="#4-2-散热与电源" class="headerlink" title="4.2 散热与电源"></a>4.2 散热与电源</h3><ul>
-<li><p>风冷 vs 液冷方案</p>
-</li>
-<li><p>高密度GPU的散热挑战</p>
-</li>
-<li><p>电源管理与能效优化</p>
-</li>
-</ul>
-<h2 id="5-性能优化策略"><a href="#5-性能优化策略" class="headerlink" title="5. 性能优化策略"></a>5. 性能优化策略</h2><h3 id="5-1-内存优化"><a href="#5-1-内存优化" class="headerlink" title="5.1 内存优化"></a>5.1 内存优化</h3><ul>
-<li><p>HBM vs GDDR显存选择</p>
-</li>
-<li><p>显存容量与带宽平衡</p>
-</li>
-<li><p>大模型训练的内存策略</p>
-</li>
-</ul>
-<h3 id="5-2-存储优化"><a href="#5-2-存储优化" class="headerlink" title="5.2 存储优化"></a>5.2 存储优化</h3><ul>
-<li><p>GPU Direct Storage技术</p>
-</li>
-<li><p>NVMe存储直通</p>
-</li>
-<li><p>数据加载性能优化</p>
-</li>
-</ul>
-<h2 id="6-发展趋势与展望"><a href="#6-发展趋势与展望" class="headerlink" title="6. 发展趋势与展望"></a>6. 发展趋势与展望</h2><h3 id="6-1-技术演进方向"><a href="#6-1-技术演进方向" class="headerlink" title="6.1 技术演进方向"></a>6.1 技术演进方向</h3><ul>
-<li><p>计算密度持续提升</p>
-</li>
-<li><p>互联带宽不断增长</p>
-</li>
-<li><p>异构计算加速器整合</p>
-</li>
-</ul>
-<h3 id="6-2-新兴技术影响"><a href="#6-2-新兴技术影响" class="headerlink" title="6.2 新兴技术影响"></a>6.2 新兴技术影响</h3><ul>
-<li><p>存储-计算融合架构</p>
-</li>
-<li><p>近数据计算技术</p>
-</li>
-<li><p>未来AI硬件发展方向</p>
-</li>
-</ul>
-<h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><ul>
-<li><p>AI服务器架构设计要点</p>
-</li>
-<li><p>性能瓶颈与优化方向</p>
-</li>
-<li><p>技术选型建议</p>
-</li>
-</ul>
-
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/04/">
+            <span class="card-archive-list-date">
+              April 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
       
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/10/CPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Mengge Liu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/10/CPU%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">CPU硬件架构解析</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-08-10 18:18:29 / Modified: 18:22:30" itemprop="dateCreated datePublished" datetime="2025-08-10T18:18:29+08:00">2025-08-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>《Processor Microarchitecture An Implementation Perspective》</p>
-<p>链接：<a target="_blank" rel="noopener" href="https://dl.icdst.org/pdfs/files/15b09def448c317556dc0fc412aee571.pdf">https://dl.icdst.org/pdfs/files/15b09def448c317556dc0fc412aee571.pdf</a></p>
-<p>处理器微架构演进主要源自两个因素：</p>
-<ul>
-<li><p>technology scaling</p>
-</li>
-<li><p>workload evolution</p>
-</li>
-</ul>
-<p>###1.1 Moore’s Law</p>
-<ul>
-<li>Moore, Gordon E. (1965). “Cramming more components onto integrated circuits” (PDF). Electronics Magazine. pp. 4.<ul>
-<li>“The complexity for minimum component costs has increased at a rate of roughly a factor of two per year.”</li>
-<li>Moore refined it to “every two years” in 1975</li>
-<li>Also quoted as “every 18 months” by David House, (referring to performance)</li>
-<li>Most popular formulation: #transistors&#x2F;IC</li>
-</ul>
-</li>
-<li>Carver Mead coined it as Moore’s law around 1970<ul>
-<li>– “Tall &amp; Thin engineers”</li>
-</ul>
-</li>
-<li>Ultimate limit of Moore’s Law<ul>
-<li>No one knows</li>
-<li>How to use the capability? Resource limit?</li>
-</ul>
-</li>
-</ul>
-<h3 id="1-2-CPU微体系结构"><a href="#1-2-CPU微体系结构" class="headerlink" title="1.2 CPU微体系结构"></a>1.2 CPU微体系结构</h3><h4 id="1-2-1-微架构分类"><a href="#1-2-1-微架构分类" class="headerlink" title="1.2.1 微架构分类"></a>1.2.1 微架构分类</h4><p>按照一些相互正交的维度进行分类：</p>
-<ol>
-<li><p>Pipelined&#x2F;Nonpipelined Processors</p>
-<p>Pipelined提高了ILP，并且由于成本效益好，几乎所有的处理器都采用</p>
-</li>
-<li><p>In-Order&#x2F;Out-of-Order Processors</p>
-<p>Out-of-Order 需要更复杂的硬件设计，在乱序执行中，指令可以不按程序指定的顺序执行，减少阻塞，但对外表现的行为还是和顺序执行的处理器一样；</p>
-</li>
-<li><p>Scalar&#x2F;Superscalar Processors </p>
-<p>标量和超标量处理器，标量处理器的 IPC 最多为 1，因为只有一套执行单元，而不是标量处理器的就是超标量处理器，IPC 可以大于 1。</p>
-</li>
-<li><p>Vector Processors</p>
-<p>向量处理器可以使用一条向量指令处理多个元素的向量，也就是 SIMD，例如 Intel 的 AVX 指令就是 SIMD 指令；</p>
-</li>
-<li><p>Multicore Processors</p>
-<p>是否多核？多核处理器中每一个核心的硬件资源相对独立不共享</p>
-</li>
-<li><p>Multithreaded Processors</p>
-<p>是否多线程？多线程中的线程通常共用大部分的硬件资源</p>
-</li>
-</ol>
-<p><strong>流水线技术</strong></p>
-<p>![image-20250724163845529](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250724163845529.png)</p>
-<p>一条指令的生命周期分为五个阶段：</p>
-<p>取指（IF）——&gt;译码（ID）——&gt;重命名 &amp; 分发——&gt;执行（EXE）——&gt;访存（MEM）——&gt;写回（WB）</p>
-<p>《从入门到放弃：CPU流水线技术全解析》<a target="_blank" rel="noopener" href="https://juejin.cn/post/7401417746541068297">https://juejin.cn/post/7401417746541068297</a></p>
-<p>将访存单独作为一个阶段的考虑：</p>
-<ul>
-<li><p>假设访存延迟为0周期，即理想寄存器</p>
-</li>
-<li><p>地址计算（加法器）的路径和访存路径加起来太长</p>
-<ul>
-<li>拆分为两个阶段更均衡</li>
-</ul>
-<p>但在实际的处理器设计中, 上述假设不再成立</p>
-<p>访存操作一般需要多个周期；</p>
-<p>cache: 缓存的控制逻辑是个状态机；即使命中，状态机也需要经过若干个周期的控制才能读出数据</p>
-<p>访存路径上有很多地址寄存器，地址计算的延迟和资源开销并不明显</p>
-</li>
-</ul>
-<h4 id=""><a href="#" class="headerlink" title=""></a></h4><p><a target="_blank" rel="noopener" href="https://xiaofeng.info//presentations/history_Intel_CPU.pdf">https://xiaofeng.info//presentations/history_Intel_CPU.pdf</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.agner.org/optimize/microarchitecture.pdf">https://www.agner.org/optimize/microarchitecture.pdf</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.mindshare.com/eLearning/Course/Intel_x86_Processor_and_Platform_Architecture_eLearning_Course">https://www.mindshare.com/eLearning/Course/Intel_x86_Processor_and_Platform_Architecture_eLearning_Course</a></p>
-<p>• Intel x86 CPU and Chipset Evolution<br>• Current Core and Xeon CPUs: Ice Lake, Cascade Lake, plus “Refresh” Variants<br>• X86 Instruction Set Architecture (ISA) and CPU Operating Modes<br>• Core and Xeon CPU Microarchitecture Differences<br>• Caches<br>• Platform Addressing<br>• Main Memory DRAM<br>• Ultra Path Interconnect (UPI)<br>• CPU Integrated Graphics<br>• CPU Integrated IO (IIO)<br>• Interrupt Handling<br>• Hardware Virtualization Support<br>• Platform Controller Hub (PCH) Features<br>• Power and Thermal Management<br>• CPU Performance Monitoring</p>
-<p><a target="_blank" rel="noopener" href="https://cdrdv2-public.intel.com/786255/786255_330119_ia-introduction-basics-paper.pdf">https://cdrdv2-public.intel.com/786255/786255_330119_ia-introduction-basics-paper.pdf</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.mindshare.com/files/ebooks/x86%20instruction%20set%20architecture.pdf">https://www.mindshare.com/files/ebooks/x86%20instruction%20set%20architecture.pdf</a></p>
-<h2 id="2-X86"><a href="#2-X86" class="headerlink" title="2.X86"></a>2.X86</h2><h3 id="2-1-Intel"><a href="#2-1-Intel" class="headerlink" title="2.1 Intel"></a>2.1 Intel</h3><h4 id="2-1-1-产品路标演进"><a href="#2-1-1-产品路标演进" class="headerlink" title="2.1.1 产品路标演进"></a>2.1.1 产品路标演进</h4><p>Intel x86 Core and Xeon Platform Background<br>o Intel 64 and IA-32 CPU lineage<br>§ 80386 to Ice Lake&#x2F;Cascade Lake<br>§ Core and Xeon CPUs Expected Next<br>o Ice Lake&#x2F;Cascade Lake Platform Examples<br>§ Gaming Desktop<br>§ 2-in-1 Laptop<br>§ Xeon Scalable CPU Server</p>
-<p>X86 Instruction Set Architecture (ISA)<br>o CPU Core Fetch&#x2F;Decode&#x2F;Execute Role<br>o X86 Instruction Basics<br>o Instruction Set Overview<br>§ General Purpose Instructions<br>§ Floating Point and SIMD Instructions<br>§ Program Flow Instructions<br>§ Hardware-Related Instructions<br>o X86 Register Set Overview<br>§ General Purpose Registers (GPRs)<br>§ X87&#x2F;MMX Registers<br>§ XMM&#x2F;YMM&#x2F;ZMM Registers<br>§ Segmentation Registers<br>§ Control Registers<br>§ Debug Registers<br>§ Model-Specific Registers (MSRs)<br>o X86 CPU Operating Modes<br>§ Real Mode<br>§ Protected Mode<br>§ Virtual-8086 Mode<br>§ System-Management Mode (SMM)<br>§ IA32e (Long) Mode</p>
-<p>![image-20250724114810496](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250724114810496.png)</p>
-<p>典型的Dual-socket systems</p>
-<p><img src="https://intelcorp.scene7.com/is/image/intelcorp/purley-2s-configuration-block-diagram-16x9:1920-1080?wid=978&hei=550&fmt=webp-alpha" alt="Intel® Xeon® Processor Scalable Family Block Diagram: 2S Configuration"></p>
-<h4 id="2-1-2-NUMA-架构"><a href="#2-1-2-NUMA-架构" class="headerlink" title="2.1.2 NUMA 架构"></a>2.1.2 NUMA 架构</h4><p><strong>Uniform Memory Access Domain</strong></p>
-<p><img src="https://www.intel.com/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-uma.png" alt="img"></p>
-<p> <strong>Sub-NUMA Clustering</strong></p>
-<p><img src="https://www.intel.com/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-2-snc.png" alt="img"></p>
-<p>​                       Figure 2 – Block Diagram Representing Domains Of sub-NUMA With Two Clusters</p>
-<p><img src="https://www.intel.com/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-4-snc.png" alt="img"></p>
-<p>​                         Figure 3 – Block Diagram Representing Domains Of sub-NUMA With Four Clusters</p>
-<h3 id="2-2-AMD"><a href="#2-2-AMD" class="headerlink" title="2.2 AMD"></a>2.2 AMD</h3><h4 id="2-2-1-架构演进"><a href="#2-2-1-架构演进" class="headerlink" title="2.2.1 架构演进"></a>2.2.1 架构演进</h4><p>![AMD CPU架构](&#x2F;Users&#x2F;rockyliu&#x2F;Documents&#x2F;技术宝典&#x2F;CPU&#x2F;X86&#x2F;AMD CPU架构.png)</p>
-<p>AMD EPYC 9004系列</p>
-<p>![image-20250723150813290](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250723150813290.png)</p>
-<p><img src="/Users/rockyliu/Documents/%E6%8A%80%E6%9C%AF%E5%AE%9D%E5%85%B8/CPU/X86/AMD-9654.png" alt="AMD-9654"></p>
-<p> 5TH GEN AMD EPYC™ PROCESSOR ARCHITECTURE</p>
-<p><a target="_blank" rel="noopener" href="https://www.amd.com/content/dam/amd/en/documents/epyc-business-docs/white-papers/5th-gen-amd-epyc-processor-architecture-white-paper.pdf">https://www.amd.com/content/dam/amd/en/documents/epyc-business-docs/white-papers/5th-gen-amd-epyc-processor-architecture-white-paper.pdf</a><br> I&#x2F;O DIE FEATURES</p>
-<p>![AMD-I:O die](&#x2F;Users&#x2F;rockyliu&#x2F;Documents&#x2F;技术宝典&#x2F;CPU&#x2F;X86&#x2F;AMD-I:O die.png)</p>
-<p>When three links between processors are used, an additional 16 PCIe lanes on each CPU are available for general I&#x2F;O, bringing the total I&#x2F;O capacity up to 160 lanes. When four links are configured, they can support a maximum theoretical bandwidth of 512 GB&#x2F;s between processors.</p>
-<ol>
-<li>当双路CPU使用G-links * 3 （48 Lanes）时，另外的16 PCIe lanes 可以用于标准I&#x2F;O，总的I&#x2F;O能力扩展到160 lanes;</li>
-<li>当双路CPU使用G-links * 4 （64 Lanes）时，CPU间支持最大双向理论带宽512GB&#x2F;s。</li>
-</ol>
-<p><img src="/Users/rockyliu/Documents/%E6%8A%80%E6%9C%AF%E5%AE%9D%E5%85%B8/CPU/X86/Genoa.png" alt="Genoa"></p>
-<p>Non-Uniform Memory Access (NUMA) architecture </p>
-<ul>
-<li>Different latencies</li>
-</ul>
-<p>​       depending on the proximity of a processor core to memory and I&#x2F;O controllers</p>
-<ul>
-<li>Same NUMA node provides uniform good performance,while use resources in differing nodes increases latencies.</li>
-</ul>
-<p>NUMA Setting </p>
-<p>NUMA Nodes Per Socket (NPSx)<br>• NPS4: Four NUMA nodes per socket, one per quadrant.<br>  o Requires symmetrical CCD configuration across all quadrants of the SoC.<br>  o Preferred Interleaving: 2-channel interleaving using channels from each quadrant.<br>• NPS2: Two NUMA nodes per socket, one per left&#x2F;right half of the SoC.<br>  o Requires symmetrical CCD configuration across left&#x2F;right halves of the SoC.<br>  o Preferred Interleaving: 4-channel interleaving using channels from each half.<br>• NPS1: One NUMA node per socket.<br>  o Available for any CCD configuration in the SoC.<br>  o Preferred Interleaving: 8-channel interleaving using all channels in the socket.<br>• NPS0: One NUMA node per system.<br>  o Available only on a 2P system.<br>  o Preferred Interleaving: 16-channel interleaving using all channels in the system.<br>Note: If the CCD configuration is altered by software (e.g., BIOS Setup Option), NPS4 and NSP2<br>options may not be available based on the Symmetry requirements noted above.</p>
-<p><img src="/Users/rockyliu/Documents/%E6%8A%80%E6%9C%AF%E5%AE%9D%E5%85%B8/CPU/X86/NPS1.png" alt="NPS1"></p>
-<p>![image-20250723175300806](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250723175300806.png)</p>
-<p>![image-20250723175400320](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250723175400320.png)</p>
-<p>![image-20250723175602458](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250723175602458.png)</p>
-<p>![image-20250723175515519](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250723175515519.png)</p>
-<p>引发问题？</p>
-<p>   1.NUMA是个好东西，为啥有的业务场景抗拒开启NPS？</p>
-<ul>
-<li><p>跨NUMA分配CPU导致远程访问性能损耗，出现性能分层</p>
-</li>
-<li><p>不同业务间共享核导致Cache频繁加载、互相污染开销增加，可用性和延时增加</p>
-</li>
-<li><p>不同优先级和不同资源敏感程度 业务pod在节点上数量分配不均衡，导致竞争开销</p>
-</li>
-<li><p>节点上其他资源的竞争（IO、网络、内存）</p>
-<p> 2.开启NPS后会增加Latency,会造成哪些影响？如何进行性能调优？</p>
-</li>
-</ul>
-<p>Infinity Fabric links</p>
-<p> External Global Memory Interconnect [xGMI] links </p>
-<ul>
-<li>Dual-socket systems</li>
-</ul>
-<p>​       4 xGMI ：4x16&#x3D;64 PCIe lanes from each socket for Infinity Fabric connections.  leave 64 PCIe lanes each socket&#x3D; 64x2&#x3D;128 lanes </p>
-<p>​       3 xGMI :  In these cases, 160 lanes for PCIe (80 per socket) </p>
-<h3 id="2-3-Chiplet技术"><a href="#2-3-Chiplet技术" class="headerlink" title="2.3 Chiplet技术"></a>2.3 Chiplet技术</h3><p>​	<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/604721264">Chiplet</a> 即小芯粒，它将一类满足特定功能的 die（裸片），通过 die-to-die 内部互联技术将多个模块芯片与底层基础芯片封装在一起，形成一个系统芯片。</p>
-<img src="/Users/rockyliu/Documents/image-20250805145129441.png" alt="image-20250805145129441" style="zoom:80%;" />
-
-<ul>
-<li><p>大面积芯片降低成本提升良率</p>
-<p>随着先进制程推进，研发成本持续走高。Chiplet 将单颗 SOC 的不同功能模块拆分成独立的小芯粒（即 Chiplet）， 大大缩小了单颗 die 的面积，起到提升良率、降低成本的作用。</p>
-</li>
-<li><p>小芯片模块化，实现IP复用，加速芯片迭代</p>
-</li>
-<li><p>Die to die的高速互联（载板或者Interposer互联）“堆料“</p>
-<p>Interposer 的材质又分为硅基、有机两种。若芯片是平铺在 封装的衬底上，则称为 2.5D 封装，若是芯片之间堆叠封装，则称为 3D 封装。</p>
-<p>![image-20250805145518266](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;2.5D:3D封装.png)</p>
-<p>芯片厂可以将多颗计算核心die进行合封，提高芯片整体性能。</p>
-</li>
-</ul>
-<h2 id="3-ARM"><a href="#3-ARM" class="headerlink" title="3.ARM"></a>3.ARM</h2><h3 id="3-1-硬件架构"><a href="#3-1-硬件架构" class="headerlink" title="3.1 硬件架构"></a>3.1 硬件架构</h3><p>《Kunpeng 920: The First 7-nm Chiplet-Based 64-Core ARM SoC for Cloud Services》</p>
-<p>链接：<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/9444893">https://ieeexplore.ieee.org/document/9444893</a></p>
-<p>知乎解读：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/654058158">https://zhuanlan.zhihu.com/p/654058158</a></p>
-<p>Kunpeng 920 采用乐高式架构设计。</p>
-<p>![image-20250725160244189](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250725160244189.png)</p>
-<p>双路使用huawei的Hydra，接口提供24-lane的SerDes</p>
-<p>![image-20250725160326915](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250725160326915.png)</p>
-<h4 id="3-1-1-芯片组件"><a href="#3-1-1-芯片组件" class="headerlink" title="3.1.1 芯片组件"></a>3.1.1 芯片组件</h4><p>![image-20250724201151569](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250724201151569.png)</p>
-<h4 id="3-1-2-组件单元"><a href="#3-1-2-组件单元" class="headerlink" title="3.1.2 组件单元"></a>3.1.2 组件单元</h4><ul>
-<li><p>片上总线：Cache一致性总线 Hydra接口级联</p>
-</li>
-<li><p>CCL：内核集群</p>
-<p>华为鲲鹏920的每个内核集群（CCL）都由4个内核和专用L2 Cache组成。华为鲲鹏920的CCL之间支持完全一致性。总线上的其他功能单元可以一致性地访问每个CCL的缓存中的最新数据。</p>
-</li>
-</ul>
-<p>![image-20250725151018554](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250725151018554.png)</p>
-<ul>
-<li>ICL：I&#x2F;O集群</li>
-</ul>
-<p>![image-20250725151216449](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250725151216449.png)</p>
-<p>一个典型的ICL包括以下组成部分：</p>
-<ol>
-<li>多个设备（如图2-9所示）；</li>
-<li>0个或1个SMMU（System Memory Management System），为设备提供地址转换和访问保护功能；</li>
-<li>1个系统总线接口</li>
-<li>1个Sysctrl或Subctrl，用于固件初始化和公共配置；</li>
-<li>1个Dispatch，为访问设备寄存器空间提供物理地址（PA）译码；</li>
-<li>0个或多个Scheduler，当设备数量较多时，Scheduler可以合并各设备的内存访问流量。</li>
-</ol>
-<ul>
-<li><p>SCCL：超级内核集群</p>
-<p>华为鲲鹏920的每个SCCL包括6个CCL、2个ICL和4个DDR控制器。DDR控制器也可以看做一个设备。SCCL内部结构如图2-10所示。</p>
-<p>![image-20250725152900850](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250725152900850.png)</p>
-</li>
-<li><p>SICL：供超级I&#x2F;O集群</p>
-<p>每个SICL由4个ICL、1个Hydra接口和1个独立的IMU组成。</p>
-<p>![image-20250725152955168](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250725152955168.png)</p>
-</li>
-</ul>
-<p>3.2 内存子系统</p>
-<p>![image-20250725153128420](&#x2F;Users&#x2F;rockyliu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20250725153128420.png)</p>
-<h2 id="4-性能分析"><a href="#4-性能分析" class="headerlink" title="4.性能分析"></a>4.性能分析</h2><h3 id="4-1-前置知识"><a href="#4-1-前置知识" class="headerlink" title="4.1 前置知识"></a>4.1 前置知识</h3><ol>
-<li><p>熟悉CPU硬件，关注微架构级别的硬件演进和主流CPU演进：</p>
-<p>a. X86 (Intel &amp; AMD)、ARM（Kunpeng）等主流CPU厂商产品：</p>
-<p>i. 基本参数</p>
-<p> ii. 微架构设计 </p>
-<p>iii. 各级（core、uncle、offcore）PMC含义、获取和应用方式（关键指标计算）</p>
-<p>b. CPU体系结构</p>
-<p>i. CPU流水线技术</p>
-<p>ii. 理解CPU的页表机制、预取机制；</p>
-<p>iii. 流水线+超标量+多发射技术如何并行执行指令提高效率</p>
-<p>iv. 理解分支预测、</p>
-<p>v. 内存组件的技术细节</p>
-<p>vi. PCIe组件技术细节</p>
-</li>
-<li><p>了解Linux内核个和相应分析工具</p>
-<p>a.熟悉Linux 进程和线程管理和调度</p>
-<p>b. 掌握Linux的性能分析与调优方法，能够进行函数级问题定位；</p>
-<p>i. 熟练使用 FlameGraph、perf、Prometheus等工具；</p>
-<p>ii. Pstack.      Gdb  attach </p>
-<p>iii. Ebpf工具、bpftrace 进行内核路径trace</p>
-</li>
-<li><p>了解公司业务的性能画像,能够通过Specint等Benchmark评估硬件性能：</p>
-<p>a. 熟悉各类服务器性能指标的含义和获取方式,并据此评估业务性能需求；</p>
-<p>i. 硬件上:CPU利用率、IPC、各级cache&#x2F;TLBmiss率、branch和branchmiss数、内存占用、内存带宽、内存延迟、UPI&#x2F;xGMI带宽、TMA指标、网卡带宽;</p>
-<p>ii. 软件上:CPUuser&#x2F;sys&#x2F;软&#x2F;硬中断利用率占比、整机load、网卡丢包、上下文切换次数;</p>
-<p>b.理解各项基本单元测试的目的、方法,能够正确评估测试结果反映的性能水平：</p>
-<p>  i. 不同读写比例下的随机读写内存带宽-时延曲线;</p>
-<p>  ii. 原子操作的指令开销;</p>
-<p>  iii .Specint的各子项负载的工作pattern和性能需求;</p>
-<p>c.掌握常见性能优化方式,帮助提高业务性能:</p>
-<p>  i. 正确使用大页内存、透明大页;</p>
-<p>  ii. 合理绑核,合理配置实例线程数量&#x2F;内存大小;</p>
-<p>  iii. 正确配置网络相关参数(网卡队列数量、大小、中断绑核、网卡PCle配置);</p>
-</li>
-</ol>
-<h3 id="4-2-分析思路"><a href="#4-2-分析思路" class="headerlink" title="4.2 分析思路"></a>4.2 分析思路</h3><p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9C%A8%E6%A1%B6%E7%90%86%E8%AB%96">木桶效应</a></p>
-<p>首先要识别性能瓶颈，通过监控测量分析定位性能瓶颈，才能结合场景对症下药（理解工作原理）</p>
-<p>在分析过程中要明确关注哪些性能指标，这个是性能分析的关键：</p>
-<ul>
-<li><p>微架构分析Microarchitecture analysis ：CPU内部瓶颈（bottlenecks）</p>
-</li>
-<li><p>锁分析Lock analysis：锁竞争和等待时间</p>
-</li>
-<li><p>IO分析：IO操作瓶颈</p>
-</li>
-<li><p>调度分析：由于调度产生的瓶颈</p>
-</li>
-<li><p>CPU限制分析：识别由于CPU竞争导致的瓶颈</p>
-</li>
-<li><p>内存边界分析：内存碎片、内存总线限制</p>
-</li>
-</ul>
-<p>微架构分析：</p>
-<p>​	现代CPU通常采用五级流水，通常包含五个执行阶段。每条指令可以分解为与流水线阶段对应的微操作：IF、ID、EXEC、MEM 和 WB。</p>
-<p><img src="https://miro.medium.com/v2/resize:fit:700/1*R2swNw346XPUM3fwbnAKBw.png" alt="img"></p>
-<p>可以使用<code>perf stat</code>命令来检查：</p>
-<p><img src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*KMwBdGSYyB6F64mof-O7Lw.png"></p>
-<p>每个指令周期的指令数越多，应用程序可以完成的工作就越多。</p>
-<p>​	</p>
-<p><strong>CPU数据缓存分析</strong></p>
-<p>CPU数据缓存分析可以通过<code>perf stat -e L1-dcache-load-misses,L1-dcache-loads</code>来验证。</p>
-<p><strong>CPU分支预测分析</strong></p>
-<p>CPU <a target="_blank" rel="noopener" href="https://blog.cloudflare.com/branch-predictor/">分支预测</a>的指标可以通过 来检查<code>perf stat -e branches,branch-misses</code></p>
-<p>TLB 缓存和 FLOPS 是潜在的瓶颈。CPU 通常将虚拟地址到物理地址的转换缓存在 TLB 中。当 TLB 缓存未命中时，CPU 需要遍历内核页表，根据引用的虚拟地址计算物理地址。这个过程非常耗时。使用大页可以减轻 TLB 的压力。</p>
-<p>Flame graphs 火焰图 </p>
-<p>IPC和CPU频率的关系</p>
-<p>由于 IPC是衡量微架构性能优劣的指标</p>
-<p>内存密集型应用程序通常以低 IPC (0-1) 为特征，而计算密集型工作负载往往具有高 IPC (4-6)。</p>
-<p>Linux perf 用户可以通过运行以下命令测量其工作负载的 IPC：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">perf <span class="built_in">stat</span> -e cycles,instructions -- a.exe</span></span><br><span class="line">2369632 cycles</span><br><span class="line">1725916 instructions # 0,73 insn per cycle</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或更简单地:</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">perf <span class="built_in">stat</span> ./a.exe</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<p>问题：</p>
-<p>1.CPU核心时钟和参考时钟的区别？</p>
-<p>2.当你提高频率时， IPC（每个周期内的指令数）是上升、下降还是保持不变？</p>
-<p>3.Roofline 性能模型是一个以吞吐量为导向的性能模型</p>
-<p>硬件有两个主要限制：计算速度 (峰值计算性能， FLOPS) 和数据移动速度 (峰值内存带宽， GB&#x2F;s)。</p>
-<p>算术强度 (Arithmetic Intensity, AI) 是 FLOPS 和字节之间的比率</p>
-<img src="/Users/rockyliu/Documents/Roofline.png" alt="image-20250805172347808" style="zoom:67%;" />
-
-<p>图 中的 roofline 图将两个应用程序 A 和 B 的性能与硬件限制进行了对比。应用程序 A 的运算强度较低，其性能受内存带宽限制，应用程序 B 的计算密集型程度更高，因此不会受到内存瓶颈的太大影响。</p>
-<h2 id="5-参考文献"><a href="#5-参考文献" class="headerlink" title="5.参考文献"></a>5.参考文献</h2><p>1.<a target="_blank" rel="noopener" href="https://jackiedinh8.medium.com/cpu-performance-analysis-1e8f90ad2d94">CPU Performance Analysis</a></p>
-<p>2.<a target="_blank" rel="noopener" href="https://miro.medium.com/v2/resize:fit:640/format:webp/1*KMwBdGSYyB6F64mof-O7Lw.png">《Performance Analysis and Tuning on Modern CPU》</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/10/%E5%AE%95%E6%9C%BA%E6%95%85%E9%9A%9C%E8%AF%8A%E6%96%AD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Mengge Liu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/10/%E5%AE%95%E6%9C%BA%E6%95%85%E9%9A%9C%E8%AF%8A%E6%96%AD/" class="post-title-link" itemprop="url">宕机故障诊断</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-08-10 16:13:08 / Modified: 16:40:24" itemprop="dateCreated datePublished" datetime="2025-08-10T16:13:08+08:00">2025-08-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/05/22/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B5%8B%E8%AF%95%E4%B8%80%E6%9C%AC%E9%80%9A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Mengge Liu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/05/22/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B5%8B%E8%AF%95%E4%B8%80%E6%9C%AC%E9%80%9A/" class="post-title-link" itemprop="url">服务器测试一本通</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-05-22 23:19:39" itemprop="dateCreated datePublished" datetime="2025-05-22T23:19:39+08:00">2025-05-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-06-23 01:04:22" itemprop="dateModified" datetime="2025-06-23T01:04:22+08:00">2025-06-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/AI-Infra/" itemprop="url" rel="index"><span itemprop="name">AI Infra</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="服务器测试一本通"><a href="#服务器测试一本通" class="headerlink" title="服务器测试一本通"></a>服务器测试一本通</h1><h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><h3 id="1-1-编写目的"><a href="#1-1-编写目的" class="headerlink" title="1.1 编写目的"></a>1.1 编写目的</h3><p>​	本文件旨在为服务器整机系统测试提供系统化、标准化的测试指导和操作规范。通过明确各部件及整机维度的测试内容、方法和要求，确保服务器产品在出厂前能够全面、有效地验证其功能、性能、稳定性、兼容性和安全性，提升产品质量，降低售后风险，为研发、测试及运维等相关人员提供权威的参考依据。</p>
-<h3 id="1-2-适用范围"><a href="#1-2-适用范围" class="headerlink" title="1.2 适用范围"></a>1.2 适用范围</h3><p>​	本文件适用于所有型号服务器产品的整机系统测试，包括但不限于X86、ARM等不同架构的服务器。适用对象涵盖服务器研发、测试、生产、质量管理等相关部门，适用于新产品开发、批量生产、版本升级及定制化项目的系统级测试工作。</p>
-<h3 id="1-3-参考标准与文档"><a href="#1-3-参考标准与文档" class="headerlink" title="1.3 参考标准与文档"></a>1.3 参考标准与文档</h3><ul>
-<li>《GB&#x2F;T 20273-2006 信息技术 服务器通用规范》</li>
-<li>《GB&#x2F;T 28181-2016 信息安全技术 网络和终端设备通用要求》</li>
-<li>《ISO&#x2F;IEC 9126 软件工程 产品质量》</li>
-<li>《SPEC CPU Benchmark Documentation》</li>
-<li>《JEDEC DDR5 SDRAM 标准》</li>
-<li>公司内部《服务器硬件测试规范》</li>
-<li>公司内部《服务器生产测试流程》</li>
-<li>相关操作系统及硬件厂商官方文档（如 Intel、AMD、ARM、RedHat、openEuler 等）</li>
-</ul>
-<h2 id="2-测试环境准备"><a href="#2-测试环境准备" class="headerlink" title="2. 测试环境准备"></a>2. 测试环境准备</h2><h3 id="2-1-硬件环境"><a href="#2-1-硬件环境" class="headerlink" title="2.1 硬件环境"></a>2.1 硬件环境</h3><h3 id="2-2-软件环境"><a href="#2-2-软件环境" class="headerlink" title="2.2 软件环境"></a>2.2 软件环境</h3><h3 id="2-3-测试工具与脚本"><a href="#2-3-测试工具与脚本" class="headerlink" title="2.3 测试工具与脚本"></a>2.3 测试工具与脚本</h3><h3 id="2-4-测试前置条件"><a href="#2-4-测试前置条件" class="headerlink" title="2.4 测试前置条件"></a>2.4 测试前置条件</h3><h2 id="3-部件维度测试"><a href="#3-部件维度测试" class="headerlink" title="3.部件维度测试"></a>3.部件维度测试</h2><h3 id="3-1-CPU处理器"><a href="#3-1-CPU处理器" class="headerlink" title="3.1 CPU处理器"></a>3.1 CPU处理器</h3><h4 id="3-1-1-识别与信息检测"><a href="#3-1-1-识别与信息检测" class="headerlink" title="3.1.1 识别与信息检测"></a>3.1.1 识别与信息检测</h4><ul>
-<li>测试目的：验证操作系统和硬件管理工具能否正确识别CPU的型号、核心数、线程数、频率、缓存等关键信息。</li>
-<li>测试方法：</li>
-</ul>
-<ol>
-<li>在操作系统下使用命令查看CPU信息。</li>
-<li>通过BMC&#x2F;IPMI Web界面或命令行工具查看CPU信息。</li>
-<li>在BIOS&#x2F;UEFI中查看CPU信息。</li>
-</ol>
-<ul>
-<li>测试工具：lscpu、cat &#x2F;proc&#x2F;cpuinfo、dmidecode、ipmitool。</li>
-<li>预期结果：各工具显示的信息与CPU硬件规格一致，无识别错误或信息缺失。</li>
-</ul>
-<h4 id="3-1-2-多核-多线程功能"><a href="#3-1-2-多核-多线程功能" class="headerlink" title="3.1.2 多核&#x2F;多线程功能"></a>3.1.2 多核&#x2F;多线程功能</h4><ul>
-<li>测试目的：验证所有CPU核心和线程均能被操作系统正常调度和使用。</li>
-<li>测试方法：</li>
-</ul>
-<ol>
-<li>运行多线程压力测试，观察所有核心是否都被激活。</li>
-<li>使用任务管理器或性能监控工具查看各核心的使用率。</li>
-<li>将进程绑定到特定核心上运行，验证其功能。</li>
-</ol>
-<ul>
-<li>测试工具：stress-ng、taskset、htop。</li>
-<li>预期结果：所有核心和线程均能被正常调度，负载能够均匀或按需分配到各个核心。</li>
-</ul>
-<h4 id="3-1-3-性能测试"><a href="#3-1-3-性能测试" class="headerlink" title="3.1.3 性能测试"></a>3.1.3 性能测试</h4><ul>
-<li><p>测试目的：评估CPU的计算性能，包括整数&#x2F;浮点运算、加密&#x2F;解密、压缩&#x2F;解压缩等能力，并与基准值或同类产品进行对比。</p>
-</li>
-<li><p>测试方法：</p>
-<ol>
-<li>运行标准的CPU基准测试程序。</li>
-<li>模拟真实应用场景进行性能评估。</li>
-</ol>
-</li>
-<li><p>测试工具：SPEC CPU® 2017 benchmark<br>Spec2017介绍：官网：<a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/">https://www.spec.org/cpu2017/</a><br>SPECCPU是一套行业标准的CPU密集型基准测试套件，其性能分数和处理器计算能力、内存能力和编译器强相关。<br>Spec2017 是 Spec2006的演进版本，Spec2006当前已停止维护。Spec2017上的测试子项做了很多变动，其中rate和speed不再复用同一个二进制文件，并且speed中支持了多线程，不仅只使用单核。<br>1.Benchmark子项<br>按照计算类别分为int整型计算和fp浮点计算，int包含包括rate多任务计算性能和speed单任务计算性能，其中intrate&#x2F;intspeed包括10个测试子项，fprate包括17个测试子项，fpspeed包含10个测试子项。</p>
-<ul>
-<li>int 整形</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>intrate子项</th>
-<th>intspeed子项</th>
-<th>语言</th>
-<th>子项描述</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/500.perlbench_r.html">500.perlbench_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/600.perlbench_s.html">600.perlbench_s</a></td>
-<td>C</td>
-<td>Perl interpreter</td>
-<td>Perl解释器</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/502.gcc_r.html">502.gcc_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/602.gcc_s.html">602.gcc_s</a></td>
-<td>C</td>
-<td>GNU C compiler</td>
-<td>GNU C编译器</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/505.mcf_r.html">505.mcf_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/605.mcf_s.html">605.mcf_s</a></td>
-<td>C</td>
-<td>Route planning</td>
-<td>路由规划</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/520.omnetpp_r.html">520.omnetpp_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/620.omnetpp_s.html">620.omnetpp_s</a></td>
-<td>C++</td>
-<td>Discrete Event simulation - computer network</td>
-<td>离散事件仿真-计算机网络</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/523.xalancbmk_r.html">523.xalancbmk_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/623.xalancbmk_s.html">623.xalancbmk_s</a></td>
-<td>C++</td>
-<td>XML to HTML conversion via XSLT</td>
-<td>通过XSLT将XML转换为HTML</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/525.x264_r.html">525.x264_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/625.x264_s.html">625.x264_s</a></td>
-<td>C</td>
-<td>Video compression</td>
-<td>视频压缩</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/531.deepsjeng_r.html">531.deepsjeng_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/631.deepsjeng_s.html">631.deepsjeng_s</a></td>
-<td>C++</td>
-<td>Artificial Intelligence: alpha-beta tree search (Chess)</td>
-<td>人工智能：阿尔法-贝塔树搜索（国际象棋）</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/541.leela_r.html">541.leela_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/641.leela_s.html">641.leela_s</a></td>
-<td>C++</td>
-<td>Artificial Intelligence: Monte Carlo tree search (Go)</td>
-<td>人工智能：蒙特卡洛树搜索(Go)</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/548.exchange2_r.html">548.exchange2_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/648.exchange2_s.html">648.exchange2_s</a></td>
-<td>Fortran</td>
-<td>Artificial Intelligence: recursive solution generator (Sudoku)</td>
-<td>人工智能：递归解生成器（数独）</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/557.xz_r.html">557.xz_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/657.xz_s.html">657.xz_s</a></td>
-<td>C</td>
-<td>General data compression</td>
-<td>通用数据压缩</td>
-</tr>
-</tbody></table>
-<ul>
-<li>fp 浮点型</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>fprate子项</th>
-<th>fpspeed子项</th>
-<th>语言</th>
-<th>子项描述</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/503.bwaves_r.html">503.bwaves_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/603.bwaves_s.html">603.bwaves_s</a></td>
-<td>Fortran</td>
-<td>Explosion modeling</td>
-<td>爆炸建模</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/507.cactuBSSN_r.html">507.cactuBSSN_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/607.cactuBSSN_s.html">607.cactuBSSN_s</a></td>
-<td>C++, C, Fortran</td>
-<td>Physics: relativity</td>
-<td>物理学：相对论</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/508.namd_r.html">508.namd_r</a></td>
-<td></td>
-<td>C++</td>
-<td>Molecular dynamics</td>
-<td>分子动力学</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/510.parest_r.html">510.parest_r</a></td>
-<td></td>
-<td>C++</td>
-<td>Biomedical imaging: optical tomography with finite elements</td>
-<td>生物医学成像：有限元光学层析成像</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/511.povray_r.html">511.povray_r</a></td>
-<td></td>
-<td>C++, C</td>
-<td>Ray tracing</td>
-<td>光线追踪</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/519.lbm_r.html">519.lbm_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/619.lbm_s.html">619.lbm_s</a></td>
-<td>C</td>
-<td>Fluid dynamics</td>
-<td>流体动力学</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/521.wrf_r.html">521.wrf_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/621.wrf_s.html">621.wrf_s</a></td>
-<td>Fortran, C</td>
-<td>Weather forecasting</td>
-<td>天气预报</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/526.blender_r.html">526.blender_r</a></td>
-<td></td>
-<td>C++, C</td>
-<td>3D rendering and animation</td>
-<td>3D渲染和动画</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/527.cam4_r.html">527.cam4_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/627.cam4_s.html">627.cam4_s</a></td>
-<td>Fortran, C</td>
-<td>Atmosphere modeling</td>
-<td>大气建模</td>
-</tr>
-<tr>
-<td></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/628.pop2_s.html">628.pop2_s</a></td>
-<td>Fortran, C</td>
-<td>Wide-scale ocean modeling (climate level)</td>
-<td>大尺度海洋建模（气候水平）</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/538.imagick_r.html">538.imagick_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/638.imagick_s.html">638.imagick_s</a></td>
-<td>C</td>
-<td>Image manipulation</td>
-<td>图像处理</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/544.nab_r.html">544.nab_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/644.nab_s.html">644.nab_s</a></td>
-<td>C</td>
-<td>Molecular dynamics</td>
-<td>分子动力学</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/549.fotonik3d_r.html">549.fotonik3d_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/649.fotonik3d_s.html">649.fotonik3d_s</a></td>
-<td>Fortran</td>
-<td>Computational Electromagnetics</td>
-<td>计算电磁学</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/554.roms_r.html">554.roms_r</a></td>
-<td><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/Docs/benchmarks/654.roms_s.html">654.roms_s</a></td>
-<td>Fortran</td>
-<td>Regional ocean modeling</td>
-<td>区域海洋建模</td>
-</tr>
-</tbody></table>
-<p><a target="_blank" rel="noopener" href="https://www.spec.org/cpu2017/results/res2017q2/cpu2017-20161026-00003.html">https://www.spec.org/cpu2017/results/res2017q2/cpu2017-20161026-00003.html</a></p>
-</li>
-<li><p>预期结果：性能测试得分符合预期范围，无异常性能下降。</p>
-</li>
-</ul>
-<h4 id="3-1-4-稳定性与压力测试"><a href="#3-1-4-稳定性与压力测试" class="headerlink" title="3.1.4 稳定性与压力测试"></a>3.1.4 稳定性与压力测试</h4><ul>
-<li>测试目的：验证CPU在高负载、长时间运行下的稳定性和可靠性，确保无死机、重启、MCE错误等问题。</li>
-<li>测试方法：<ol>
-<li>运行长时间的CPU压力测试（通常24小时以上）。</li>
-<li>在压力测试期间，监控系统日志和硬件错误日志。</li>
-<li></li>
-</ol>
-</li>
-<li>测试工具：stress-ng、Prime95 (mprime)、Linpack。</li>
-<li>预期结果：在长时间压力测试下，系统运行稳定，无崩溃、重启或硬件错误记录。</li>
-</ul>
-<h4 id="3-1-5-温度与功耗监控"><a href="#3-1-5-温度与功耗监控" class="headerlink" title="3.1.5 温度与功耗监控"></a>3.1.5 温度与功耗监控</h4><ul>
-<li>测试目的：验证CPU在不同负载下的温度和功耗是否在正常范围内，并检查温控和节能机制是否有效。</li>
-<li>测试方法：<ol>
-<li>在待机和满载状态下，通过BMC&#x2F;IPMI或操作系统工具读取CPU温度和功耗。</li>
-<li>验证CPU频率是否能根据负载动态调整（如睿频、降频）。</li>
-<li></li>
-</ol>
-</li>
-<li>测试工具：ipmitool sensor、lm-sensors、turbostat。</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">常用命令</span></span><br><span class="line">ipmitool sdr list </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li>预期结果：CPU温度和功耗在设计规格内，温控和节能机制符合预期。</li>
-</ul>
-<h3 id="3-2-内存（Memory）"><a href="#3-2-内存（Memory）" class="headerlink" title="3.2 内存（Memory）"></a>3.2 内存（Memory）</h3><p><img src="https://io.bikegremlin.com/wp-content/uploads/2024/07/ddr3-vs-ddr4-vs-ddr5.jpg" alt="DDR5 vs DDR4 vs DDR3 RAM module slot connector differences"></p>
-<h4 id="3-2-1-识别与容量检测"><a href="#3-2-1-识别与容量检测" class="headerlink" title="3.2.1 识别与容量检测"></a>3.2.1 识别与容量检测</h4><h4 id="3-2-2-带宽与延迟测试"><a href="#3-2-2-带宽与延迟测试" class="headerlink" title="3.2.2 带宽与延迟测试"></a>3.2.2 带宽与延迟测试</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span>    ONE            p = (char **)*p;</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>    FIVE    ONE ONE ONE ONE ONE</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>    TEN            FIVE FIVE</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>    FIFTY    TEN TEN TEN TEN TEN</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>    HUNDRED    FIFTY FIFTY</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (iterations-- &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; count; ++i) &#123;</span><br><span class="line">            HUNDRED;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="3-2-3-ECC-纠错功能"><a href="#3-2-3-ECC-纠错功能" class="headerlink" title="3.2.3 ECC&#x2F;纠错功能"></a>3.2.3 ECC&#x2F;纠错功能</h4><h4 id="3-2-4-稳定性与压力测试"><a href="#3-2-4-稳定性与压力测试" class="headerlink" title="3.2.4 稳定性与压力测试"></a>3.2.4 稳定性与压力测试</h4><h4 id="3-2-5-多通道-多根条兼容性"><a href="#3-2-5-多通道-多根条兼容性" class="headerlink" title="3.2.5 多通道&#x2F;多根条兼容性"></a>3.2.5 多通道&#x2F;多根条兼容性</h4><p>存储延迟 </p>
-<p>在处理器的性能指标中，各级Cache的访存延迟是一个重要的参数，其决定如果Cache访问命中或者失效，需要多少拍能回来，                       其为基于跳步（stride）的访存测试结果。</p>
-<p>这个测试应用LMbench中的存储延迟测试工具，执行的命令为.&#x2F;lat_mem_rd 128M 4096，其中4096参数为跳步大小。</p>
-<p>其基本原理是，通过按给定间隔去循环读一定大小的内存区域，测量每个读平均的时间。如果区域大小小于L1 Cache大小，时间应该接近L1的访问延迟；如果大于L1小于L2，则接近L2访问延迟；</p>
-<h3 id="3-3-存储（硬盘-SSD-RAID）"><a href="#3-3-存储（硬盘-SSD-RAID）" class="headerlink" title="3.3 存储（硬盘&#x2F;SSD&#x2F;RAID）"></a>3.3 存储（硬盘&#x2F;SSD&#x2F;RAID）</h3><h4 id="3-3-1-识别与容量检测"><a href="#3-3-1-识别与容量检测" class="headerlink" title="3.3.1 识别与容量检测"></a>3.3.1 识别与容量检测</h4><h4 id="3-3-2-性能测试"><a href="#3-3-2-性能测试" class="headerlink" title="3.3.2 性能测试"></a>3.3.2 性能测试</h4><h4 id="3-3-3-RAID功能与容错"><a href="#3-3-3-RAID功能与容错" class="headerlink" title="3.3.3 RAID功能与容错"></a>3.3.3 RAID功能与容错</h4><h4 id="3-3-4-热插拔与重建"><a href="#3-3-4-热插拔与重建" class="headerlink" title="3.3.4 热插拔与重建"></a>3.3.4 热插拔与重建</h4><h4 id="3-3-5-数据完整性与恢复"><a href="#3-3-5-数据完整性与恢复" class="headerlink" title="3.3.5 数据完整性与恢复"></a>3.3.5 数据完整性与恢复</h4><h3 id="3-4-网络（NIC-网卡）"><a href="#3-4-网络（NIC-网卡）" class="headerlink" title="3.4 网络（NIC&#x2F;网卡）"></a>3.4 网络（NIC&#x2F;网卡）</h3><h4 id="3-4-1-识别与速率检测"><a href="#3-4-1-识别与速率检测" class="headerlink" title="3.4.1 识别与速率检测"></a>3.4.1 识别与速率检测</h4><h4 id="3-4-2-单口-多口带宽测试"><a href="#3-4-2-单口-多口带宽测试" class="headerlink" title="3.4.2 单口&#x2F;多口带宽测试"></a>3.4.2 单口&#x2F;多口带宽测试</h4><h4 id="3-4-3-多队列与中断亲和性"><a href="#3-4-3-多队列与中断亲和性" class="headerlink" title="3.4.3 多队列与中断亲和性"></a>3.4.3 多队列与中断亲和性</h4><h4 id="3-4-4-直连-组网功能"><a href="#3-4-4-直连-组网功能" class="headerlink" title="3.4.4 直连&#x2F;组网功能"></a>3.4.4 直连&#x2F;组网功能</h4><h4 id="3-4-5-PXE-远程启动"><a href="#3-4-5-PXE-远程启动" class="headerlink" title="3.4.5 PXE&#x2F;远程启动"></a>3.4.5 PXE&#x2F;远程启动</h4><h3 id="3-5-主板与芯片组"><a href="#3-5-主板与芯片组" class="headerlink" title="3.5 主板与芯片组"></a>3.5 主板与芯片组</h3><h4 id="3-5-1-识别与信息检测"><a href="#3-5-1-识别与信息检测" class="headerlink" title="3.5.1 识别与信息检测"></a>3.5.1 识别与信息检测</h4><h4 id="3-5-2-BIOS-UEFI功能与升级"><a href="#3-5-2-BIOS-UEFI功能与升级" class="headerlink" title="3.5.2 BIOS&#x2F;UEFI功能与升级"></a>3.5.2 BIOS&#x2F;UEFI功能与升级</h4><h4 id="3-5-3-PCIe插槽与扩展卡兼容性"><a href="#3-5-3-PCIe插槽与扩展卡兼容性" class="headerlink" title="3.5.3 PCIe插槽与扩展卡兼容性"></a>3.5.3 PCIe插槽与扩展卡兼容性</h4><h4 id="3-5-4-温度与电压监控"><a href="#3-5-4-温度与电压监控" class="headerlink" title="3.5.4 温度与电压监控"></a>3.5.4 温度与电压监控</h4><h3 id="3-6-电源与风扇"><a href="#3-6-电源与风扇" class="headerlink" title="3.6 电源与风扇"></a>3.6 电源与风扇</h3><h4 id="3-6-1-电源冗余与切换"><a href="#3-6-1-电源冗余与切换" class="headerlink" title="3.6.1 电源冗余与切换"></a>3.6.1 电源冗余与切换</h4><h4 id="3-6-2-风扇转速与温控"><a href="#3-6-2-风扇转速与温控" class="headerlink" title="3.6.2 风扇转速与温控"></a>3.6.2 风扇转速与温控</h4><h4 id="3-6-3-功耗测试"><a href="#3-6-3-功耗测试" class="headerlink" title="3.6.3 功耗测试"></a>3.6.3 功耗测试</h4><h4 id="3-6-4-断电-恢复"><a href="#3-6-4-断电-恢复" class="headerlink" title="3.6.4 断电&#x2F;恢复"></a>3.6.4 断电&#x2F;恢复</h4><h3 id="3-7-BMC-IPMI-远程管理"><a href="#3-7-BMC-IPMI-远程管理" class="headerlink" title="3.7 BMC&#x2F;IPMI&#x2F;远程管理"></a>3.7 BMC&#x2F;IPMI&#x2F;远程管理</h3><h4 id="3-7-1-远程管理功能"><a href="#3-7-1-远程管理功能" class="headerlink" title="3.7.1 远程管理功能"></a>3.7.1 远程管理功能</h4><h4 id="3-7-2-传感器与告警"><a href="#3-7-2-传感器与告警" class="headerlink" title="3.7.2 传感器与告警"></a>3.7.2 传感器与告警</h4><h4 id="3-7-3-虚拟介质与远程控制"><a href="#3-7-3-虚拟介质与远程控制" class="headerlink" title="3.7.3 虚拟介质与远程控制"></a>3.7.3 虚拟介质与远程控制</h4><h4 id="3-7-4-固件升级与恢复"><a href="#3-7-4-固件升级与恢复" class="headerlink" title="3.7.4 固件升级与恢复"></a>3.7.4 固件升级与恢复</h4><h3 id="3-8-GPU-加速卡"><a href="#3-8-GPU-加速卡" class="headerlink" title="3.8 GPU&#x2F;加速卡"></a>3.8 GPU&#x2F;加速卡</h3><h4 id="3-8-1-识别与驱动加载"><a href="#3-8-1-识别与驱动加载" class="headerlink" title="3.8.1 识别与驱动加载"></a>3.8.1 识别与驱动加载</h4><h4 id="3-8-2-性能与兼容性"><a href="#3-8-2-性能与兼容性" class="headerlink" title="3.8.2 性能与兼容性"></a>3.8.2 性能与兼容性</h4><h4 id="3-8-3-稳定性与压力测试"><a href="#3-8-3-稳定性与压力测试" class="headerlink" title="3.8.3 稳定性与压力测试"></a>3.8.3 稳定性与压力测试</h4><h3 id="3-9-其他部件"><a href="#3-9-其他部件" class="headerlink" title="3.9 其他部件"></a>3.9 其他部件</h3><h4 id="3-9-1-USB-串口-并口"><a href="#3-9-1-USB-串口-并口" class="headerlink" title="3.9.1 USB&#x2F;串口&#x2F;并口"></a>3.9.1 USB&#x2F;串口&#x2F;并口</h4><h4 id="3-9-2-TPM-安全模块"><a href="#3-9-2-TPM-安全模块" class="headerlink" title="3.9.2 TPM&#x2F;安全模块"></a>3.9.2 TPM&#x2F;安全模块</h4><h4 id="3-9-3-光驱-读卡器等"><a href="#3-9-3-光驱-读卡器等" class="headerlink" title="3.9.3 光驱&#x2F;读卡器等"></a>3.9.3 光驱&#x2F;读卡器等</h4><h2 id="4-整机维度测试"><a href="#4-整机维度测试" class="headerlink" title="4. 整机维度测试"></a>4. 整机维度测试</h2><h3 id="4-1-操作系统与驱动"><a href="#4-1-操作系统与驱动" class="headerlink" title="4.1 操作系统与驱动"></a>4.1 操作系统与驱动</h3><h4 id="4-1-1-操作系统安装与兼容性"><a href="#4-1-1-操作系统安装与兼容性" class="headerlink" title="4.1.1 操作系统安装与兼容性"></a>4.1.1 操作系统安装与兼容性</h4><h4 id="4-1-2-驱动加载与兼容性"><a href="#4-1-2-驱动加载与兼容性" class="headerlink" title="4.1.2 驱动加载与兼容性"></a>4.1.2 驱动加载与兼容性</h4><h4 id="4-1-3-固件升级与回滚"><a href="#4-1-3-固件升级与回滚" class="headerlink" title="4.1.3 固件升级与回滚"></a>4.1.3 固件升级与回滚</h4><h4 id="4-1-4-日志与告警检测"><a href="#4-1-4-日志与告警检测" class="headerlink" title="4.1.4 日志与告警检测"></a>4.1.4 日志与告警检测</h4><h3 id="4-2-性能测试"><a href="#4-2-性能测试" class="headerlink" title="4.2 性能测试"></a>4.2 性能测试</h3><h4 id="4-2-1-CPU整机性能"><a href="#4-2-1-CPU整机性能" class="headerlink" title="4.2.1 CPU整机性能"></a>4.2.1 CPU整机性能</h4><p>计算机系统的性能有许多衡量指标，如执行时间或者响应时间、吞吐率、加速比、每条指令的时钟周期数（CPI）、每秒执行百万条指令数（MIPS）、每秒执行百万浮点运算数（MFLOPS）、每秒执行的事务数（TPS）和归一化的执行时间等。</p>
-<p>归根结底，计算机的性能最本质的定义是“完成一个任务所需要的时间”。</p>
-<p>计算机中完成一个任务的时间包括CPU计算、磁盘的访问、内存的访问、输入输出的活动和操作系统的开销等所有的时间。</p>
-<h4 id="4-2-2-内存整机带宽与延迟"><a href="#4-2-2-内存整机带宽与延迟" class="headerlink" title="4.2.2 内存整机带宽与延迟"></a>4.2.2 内存整机带宽与延迟</h4><h4 id="4-2-3-存储整机性能"><a href="#4-2-3-存储整机性能" class="headerlink" title="4.2.3 存储整机性能"></a>4.2.3 存储整机性能</h4><h4 id="4-2-4-网络整机带宽与延迟"><a href="#4-2-4-网络整机带宽与延迟" class="headerlink" title="4.2.4 网络整机带宽与延迟"></a>4.2.4 网络整机带宽与延迟</h4><h4 id="4-2-5-整机压力测试"><a href="#4-2-5-整机压力测试" class="headerlink" title="4.2.5 整机压力测试"></a>4.2.5 整机压力测试</h4><h4 id="4-3-稳定性与可靠性"><a href="#4-3-稳定性与可靠性" class="headerlink" title="4.3 稳定性与可靠性"></a>4.3 稳定性与可靠性</h4><h4 id="4-3-1-长时间压力测试"><a href="#4-3-1-长时间压力测试" class="headerlink" title="4.3.1 长时间压力测试"></a>4.3.1 长时间压力测试</h4><h4 id="4-3-2-断电-重启-热插拔"><a href="#4-3-2-断电-重启-热插拔" class="headerlink" title="4.3.2 断电&#x2F;重启&#x2F;热插拔"></a>4.3.2 断电&#x2F;重启&#x2F;热插拔</h4><h4 id="4-3-3-多用户并发"><a href="#4-3-3-多用户并发" class="headerlink" title="4.3.3 多用户并发"></a>4.3.3 多用户并发</h4><h4 id="4-3-4-软硬件容错"><a href="#4-3-4-软硬件容错" class="headerlink" title="4.3.4 软硬件容错"></a>4.3.4 软硬件容错</h4><h3 id="4-4-功耗与能耗"><a href="#4-4-功耗与能耗" class="headerlink" title="4.4 功耗与能耗"></a>4.4 功耗与能耗</h3><h4 id="4-4-1-待机功耗"><a href="#4-4-1-待机功耗" class="headerlink" title="4.4.1 待机功耗"></a>4.4.1 待机功耗</h4><h4 id="4-4-2-满载功耗"><a href="#4-4-2-满载功耗" class="headerlink" title="4.4.2 满载功耗"></a>4.4.2 满载功耗</h4><h4 id="4-4-3-节能特性"><a href="#4-4-3-节能特性" class="headerlink" title="4.4.3 节能特性"></a>4.4.3 节能特性</h4><h3 id="4-5-安全性"><a href="#4-5-安全性" class="headerlink" title="4.5 安全性"></a>4.5 安全性</h3><h4 id="4-5-1-账户与权限管理"><a href="#4-5-1-账户与权限管理" class="headerlink" title="4.5.1 账户与权限管理"></a>4.5.1 账户与权限管理</h4><h4 id="4-5-2-防火墙与端口安全"><a href="#4-5-2-防火墙与端口安全" class="headerlink" title="4.5.2 防火墙与端口安全"></a>4.5.2 防火墙与端口安全</h4><h4 id="4-5-3-日志与审计"><a href="#4-5-3-日志与审计" class="headerlink" title="4.5.3 日志与审计"></a>4.5.3 日志与审计</h4><h4 id="4-5-4-恶意代码与漏洞扫描"><a href="#4-5-4-恶意代码与漏洞扫描" class="headerlink" title="4.5.4 恶意代码与漏洞扫描"></a>4.5.4 恶意代码与漏洞扫描</h4><h3 id="4-6-兼容性与互操作性"><a href="#4-6-兼容性与互操作性" class="headerlink" title="4.6 兼容性与互操作性"></a>4.6 兼容性与互操作性</h3><h4 id="4-6-1-多操作系统兼容"><a href="#4-6-1-多操作系统兼容" class="headerlink" title="4.6.1 多操作系统兼容"></a>4.6.1 多操作系统兼容</h4><h4 id="4-6-2-多种存储-网络设备兼容"><a href="#4-6-2-多种存储-网络设备兼容" class="headerlink" title="4.6.2 多种存储&#x2F;网络设备兼容"></a>4.6.2 多种存储&#x2F;网络设备兼容</h4><h4 id="4-6-3-虚拟化兼容"><a href="#4-6-3-虚拟化兼容" class="headerlink" title="4.6.3 虚拟化兼容"></a>4.6.3 虚拟化兼容</h4><h3 id="4-7-故障注入与恢复"><a href="#4-7-故障注入与恢复" class="headerlink" title="4.7 故障注入与恢复"></a>4.7 故障注入与恢复</h3><h4 id="4-7-1-硬件故障模拟"><a href="#4-7-1-硬件故障模拟" class="headerlink" title="4.7.1 硬件故障模拟"></a>4.7.1 硬件故障模拟</h4><h4 id="4-7-2-软件异常处理"><a href="#4-7-2-软件异常处理" class="headerlink" title="4.7.2 软件异常处理"></a>4.7.2 软件异常处理</h4><h4 id="4-7-3-数据恢复能力"><a href="#4-7-3-数据恢复能力" class="headerlink" title="4.7.3 数据恢复能力"></a>4.7.3 数据恢复能力</h4><h2 id="5-测试结果与问题记录"><a href="#5-测试结果与问题记录" class="headerlink" title="5. 测试结果与问题记录"></a>5. 测试结果与问题记录</h2><h3 id="5-1-测试结果汇总"><a href="#5-1-测试结果汇总" class="headerlink" title="5.1 测试结果汇总"></a>5.1 测试结果汇总</h3><h3 id="5-2-问题与缺陷记录"><a href="#5-2-问题与缺陷记录" class="headerlink" title="5.2 问题与缺陷记录"></a>5.2 问题与缺陷记录</h3><h3 id="5-3-解决建议"><a href="#5-3-解决建议" class="headerlink" title="5.3 解决建议"></a>5.3 解决建议</h3><h2 id="6-附录"><a href="#6-附录" class="headerlink" title="6.附录"></a>6.附录</h2><h3 id="6-1-测试脚本与工具说明"><a href="#6-1-测试脚本与工具说明" class="headerlink" title="6.1 测试脚本与工具说明"></a>6.1 测试脚本与工具说明</h3><table>
-<thead>
-<tr>
-<th>speccpu2017</th>
-<th>1.1.8</th>
-<th>CPU性能测试工具</th>
-<th>商用软件，需官方购买</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>stream</td>
-<td>&#x2F;</td>
-<td>内存带宽性能测试工具</td>
-<td><a target="_blank" rel="noopener" href="https://github.com/jeffhammond/STREAM/archive/master.zip">https://github.com/jeffhammond/STREAM/archive/master.zip</a></td>
-</tr>
-<tr>
-<td>FIO</td>
-<td>3.13</td>
-<td>磁盘IO性能测试工具</td>
-<td><a target="_blank" rel="noopener" href="https://brick.kernel.dk/snaps/fio-3.33.tar.gz">https://brick.kernel.dk/snaps/fio-3.33.tar.gz</a></td>
-</tr>
-<tr>
-<td>netperf</td>
-<td>2.7.0</td>
-<td>网络带宽性能测试工具</td>
-<td><a target="_blank" rel="noopener" href="https://github.com/HewlettPackard/netperf/archive/netperf-2.7.0.tar.gz">https://github.com/HewlettPackard/netperf/archive/netperf-2.7.0.tar.gz</a></td>
-</tr>
-<tr>
-<td>Iperf</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>stress</td>
-<td>1.0.5</td>
-<td>稳定性压力测试软件</td>
-<td><a target="_blank" rel="noopener" href="https://fossies.org/linux/privat/old/stress-1.0.5.tar.gz">https://fossies.org/linux/privat/old/stress-1.0.5.tar.gz</a></td>
-</tr>
-<tr>
-<td>Memtester</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h3 id="6-2-术语表"><a href="#6-2-术语表" class="headerlink" title="6.2 术语表"></a>6.2 术语表</h3><p>AI 人工智能（Artificial Intelligence）<br>AIGC 生成式人工智能（Artificial Intelligence Generated Content）<br>ASIC 专用集成电路芯片（Application Specific Integrated Circuit）<br>CEM 板卡机电（Card Electromechanical）<br>CPU 中央处理器（Central Processing Unit）<br>EMC 电磁兼容性（Electromagnetic Compatibility）<br>FPGA 现场可编程门阵列（Field Programmable Gate Array）<br>GPGPU 通用图像处理器（General-purpose computing on graphics processing units）<br>PCIe 高速外围组件互连总线 （Peripheral Component Interconnect Express）<br>PUE 数据中心电能利用率（Power Usage Effectiveness）<br>RCM 机柜冷却工质供回歧管（Rack Coolant Manifold）<br>VR 电压调节器（Voltage Regulator）</p>
-<h3 id="6-3-参考文献"><a href="#6-3-参考文献" class="headerlink" title="6.3 参考文献"></a>6.3 参考文献</h3>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/05/15/%E6%9C%8D%E5%8A%A1%E5%99%A8-JDM%E6%A8%A1%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Mengge Liu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/05/15/%E6%9C%8D%E5%8A%A1%E5%99%A8-JDM%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">服务器-JDM模式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-05-15 21:55:21" itemprop="dateCreated datePublished" datetime="2025-05-15T21:55:21+08:00">2025-05-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-06-08 18:49:01" itemprop="dateModified" datetime="2025-06-08T18:49:01+08:00">2025-06-08</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>退一步显然没有海阔天空，但进一步也没有成熟经验。在此之前，科技产业只有两种IT供应链模式：“产品型”的OEM和“定制型”的ODM。前者是我（设备供应商）卖什么，你就只能买什么；后者是我（甲方客户）买什么，你就只能卖什么。</p>
-<p>JDM模式全称是Joint Design Manufacture联合开发模式</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/05/14/LLM-Interview-Note/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Mengge Liu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/05/14/LLM-Interview-Note/" class="post-title-link" itemprop="url">LLM_Interview_Note</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-05-14 22:27:14" itemprop="dateCreated datePublished" datetime="2025-05-14T22:27:14+08:00">2025-05-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-05-15 21:49:12" itemprop="dateModified" datetime="2025-05-15T21:49:12+08:00">2025-05-15</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>1.当训练推理卡规模倍增的情况下，最容易产生瓶颈的位置可能是什么？<br>a.请展开分析产生的原因<br>b.对于此类问题，有什么优化或者缓解的方案<br>LLM训练&amp;推理相关问题</p>
-<ol>
-<li>当训练推理卡规模倍增的情况下，最容易产生瓶颈的位置可能是什么？<br>a. 请展开分析产生的原因<br>b. 对于此类问题，有什么优化或者缓解方案<br>● 主要瓶颈位置及原因</li>
-<li>网络通信带宽瓶颈<br>当训练推理卡规模倍增时，网络通信往往成为首要瓶颈。在分布式训练中，每个GPU完成计算后需与其他设备交换梯度信息，形成全局更新。随着设备数量增加，通信量可能呈平方或线性增长，而网络基础设施提升通常不成比例。这导致大量GPU在计算完成后需等待梯度同步，显著降低整体训练效率。特别是在大批量训练时，梯度同步时间可能占据总训练时间的30%以上。</li>
-</ol>
-<p>2.内存带宽瓶颈<br>现代GPU计算核心数量增长速度通常快于内存带宽提升。在大模型训练过程中，权重、激活值、梯度等数据需在内存与计算单元间频繁传输，内存带宽不足会造成”内存墙”问题。测试表明，大型模型训练时GPU计算核心利用率可能仅有40-60%，主要受限于内存带宽，而非计算能力。这种情况下，即使增加更多GPU，性能提升也会低于理想值。</p>
-<p>3.存储I&#x2F;O瓶颈<br>大规模训练通常需处理TB级甚至PB级数据集。当并行GPU数量成倍增加时，对存储系统的并发读取压力呈线性增长。传统存储架构难以满足数百上千GPU的并发读取需求，导致数据加载成为训练流水线中的瓶颈。实践表明，在某些大规模训练中，GPU可能有20-30%时间处于等待数据状态。</p>
-<p>4.电力和散热瓶颈<br>	高性能GPU&#x2F;TPU功耗通常在300-700W范围，密集部署时每机柜功耗可达40-60kW，远超传统数据中心设计标准(~15kW&#x2F;机柜)。此外，空气冷却效率有限，难以有效散走如此密集的热量。在功率或温度限制下，GPU&#x2F;TPU可能被迫降频运行，无法发挥全部性能潜力。</p>
-<p>5.软件扩展性瓶颈<br>	许多训练框架最初设计时未考虑极大规模并行场景。随着设备数量增加，调度开销、负载不均衡、资源碎片化等问题变得更为突出。软件层面的低效率可能使硬件资源利用率下降到理想值的70%以下，且这种效率损失通常随规模增大而加剧。</p>
-<p>● 优化与缓解方案</p>
-<ol>
-<li><p>网络通信优化<br> 高性能互联技术：部署InfiniBand HDR&#x2F;NDR、RDMA或专用AI网络架构，提供高带宽低延迟网络(如400Gbps-800Gbps互联)<br>高效通信算法：实施Ring AllReduce、Tree AllReduce、BytePS等集合通信算法，降低通信复杂度<br>梯度压缩技术：采用量化(1-8bit)、Top-K稀疏化、错误补偿等方法减少传输数据量<br>通信计算重叠：设计流水线使梯度通信与下一步计算并行执行，减少等待时间<br>2.内存带宽优化<br>混合精度训练：使用FP16&#x2F;BF16替代FP32，在保持精度的同时减少内存传输量达50%<br>梯度累积策略：增大逻辑批次大小但分步计算，减少参数更新和同步频率<br>内存效率算法：实施激活值重计算(Activation Recomputation)、选择性检查点(Selective Checkpointing)等节省内存技术<br>硬件选择优化：优先选用HBM2E&#x2F;HBM3等高带宽内存的GPU&#x2F;TPU，如NVIDIA H100&#x2F;H200或AMD MI300系列</p>
-</li>
-<li><p>存储I&#x2F;O优化<br>高性能分布式存储：部署HDFS、Lustre、Ceph或专用AI存储系统，提供TB&#x2F;s级吞吐量<br>多级缓存架构：在计算节点本地SSD或内存中建立数据缓存层，减少远程访问<br>智能数据预取：基于训练模式预测并提前加载下一批训练数据，隐藏I&#x2F;O延迟<br>高效数据流水线：实现多阶段并行数据处理，如NVIDIA DALI或TensorFlow tf.data优化流水线</p>
-</li>
-<li><p>电力和散热解决方案<br>先进冷却技术：采用直接液冷、浸没式冷却或冷板技术，散热效率提升3-5倍<br>高效电源系统：使用转换效率95%以上的电源和UPS系统，减少能耗转换损失<br>智能功耗管理：实施动态电压频率调节(DVFS)和精细化功耗分配，优化整体能效<br>专用AI基础设施：建设专为高密度AI集群设计的数据中心，支持100kW+每机柜功率</p>
-</li>
-<li><p>软件架构优化<br>专业分布式框架：使用DeepSpeed、Megatron-LM、Colossal-AI等专为大规模训练设计的框架<br>混合并行策略：结合数据并行、模型并行、流水线并行和张量并行等技术，最大化硬件利用率<br>ZeRO优化系列：实施ZeRO-Offload、ZeRO-Infinity等内存优化技术，突破单卡内存限制<br>容错训练系统：支持检查点、弹性恢复和动态资源调整的训练系统，提高大规模集群可靠性</p>
-</li>
-</ol>
-<p>三、综合优化策略<br>最有效的方案通常是综合应用上述技术，形成完整优化体系：<br>基础设施层面：建设专用AI训练集群，配备高带宽网络、液冷系统和高效电源<br>硬件选型层面：选择内存带宽与计算能力平衡的加速卡，如H100、H200或专用ASIC<br>系统软件层面：部署优化的驱动、通信库和分布式文件系统，提供底层效率保障<br>训练框架层面：使用支持多种并行策略的框架，根据模型特点选择最佳并行方案<br>算法优化层面：实施混合精度、梯度压缩、激活值重计算等算法级优化<br>通过这种多层次、全方位的优化体系，可以显著提高大规模推理卡训练效率，使性能扩展更接近线性理想状态，充分发挥硬件投资价值。在实践中，通常需根据具体模型特点、训练规模和可用资源，定制最适合的优化组合。<br>2.请解释并介绍一下Roofline模型，如何判断性能已经达到计算瓶颈</p>
-<p>3.请介绍一下Flash-attention&#x2F;Page attention</p>
-<p>4.当进行GEMM计算时，一定可以保证它是一个计算瓶颈的算子？优化思路如何？</p>
-<p>5.对于性能优化的定位和瓶颈的检测</p>
-<p>6.GQA attention模块的实现</p>
-<p>7.什么是scaling law</p>
-<p>8.模型结构</p>
-<p>9.解决显存容量不够的方法，对于显存优化的选择有什么看法？</p>
-<p>10.MOE 和Dense模型的区别 各自的优缺点<br>a.计算量、参数量、训练效果<br>b.如何选择</p>
-<p>11.宏观上推理prefill、decode过程 prefill是compute bound、decode是memory bound</p>
-<p>12.算子gemm、transpose、mha、rmsnorm、gemv、rope等算子的优化方案</p>
-<p>13.量化awq&#x2F;fp8&#x2F;bf16&#x2F;int8&#x2F;gptq&#x2F;wight-only优化</p>
-<p>14.分布式推理 DP TP PP </p>
-<p>15.推理优化 continuous batching&#x2F;speculative decoding </p>
-<p>16.分布式推理all-reduce&#x2F;all-gather 优化</p>
-<p>17.通信优化nccl infiniband优化</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/05/14/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Mengge Liu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/05/14/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-05-14 20:47:02" itemprop="dateCreated datePublished" datetime="2025-05-14T20:47:02+08:00">2025-05-14</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/04/29/%E6%88%91%E7%9A%84450MT%E6%8F%90%E8%BD%A6%E6%97%A5%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Mengge Liu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Mengge's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/04/29/%E6%88%91%E7%9A%84450MT%E6%8F%90%E8%BD%A6%E6%97%A5%E8%AE%B0/" class="post-title-link" itemprop="url">我的450MT提车日记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-04-29 00:24:14" itemprop="dateCreated datePublished" datetime="2025-04-29T00:24:14+08:00">2025-04-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-06-23 00:21:04" itemprop="dateModified" datetime="2025-06-23T00:21:04+08:00">2025-06-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Life/" itemprop="url" rel="index"><span itemprop="name">Life</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Life/Motocycle/" itemprop="url" rel="index"><span itemprop="name">Motocycle</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="初识"><a href="#初识" class="headerlink" title="初识"></a>初识</h2><p>450mt 标准版</p>
-<p>“我妄想骑着我的烂摩托，去转一转…”，买摩托的想法从2023开始，一直想搞一辆摩托骑；于是在24年初报考了驾校，将驾驶证转到了北京，经历了一个月的忙碌，刘师傅终于可以合法上路了，奈何没有车；那下一步就是买车？又陷入了选择困难，虽然年轻人都喜欢仿赛（骑最猛的车，割最大的痔疮 哈哈），巡航那更不行（咖啡太苦，上班喝喝还行…)，所以对于一个豫西小伙来说，看惯山山水水，骨子里还是有点冒险精神，那最后只有ADV了，毕竟（Adventure Begins Where The Road Ends.），那就开整呗~<br>开整肯定没那那么快，必须先考察一波。每天晚饭日常遛弯的首要任务就是看车，瞧瞧大佬都买什么车，看了一圈Kwaisake nijia400不下10辆（都是rich man）,啥配色都有；其次就是巡航，咖啡车还是上档次，占停车场半壁江山；ADV瞅了一圈，都不咋喜欢，主要排量太大腿短驾驭不了。总结一下，有点乱花渐欲迷人眼了,没我的梦中情车，看来还要寻觅一番…<br>这里搞几张大佬爱车帅照，搞个简易车展…</p>
-<center class="half">
-    <style>.elqdtosuotkp{zoom:20%;}</style><img src="/2025/04/29/%E6%88%91%E7%9A%84450MT%E6%8F%90%E8%BD%A6%E6%97%A5%E8%AE%B0/kwaisak.jpg" class="elqdtosuotkp" alt="kwaisak">
-    <style>.qtvrxdtiadli{zoom:20%;}</style><img src="/2025/04/29/%E6%88%91%E7%9A%84450MT%E6%8F%90%E8%BD%A6%E6%97%A5%E8%AE%B0/BMW1800.jpg" class="qtvrxdtiadli" alt="BMW1800">
-    <style>.igmfkxfumgkb{zoom:20%;}</style><img src="/2025/04/29/%E6%88%91%E7%9A%84450MT%E6%8F%90%E8%BD%A6%E6%97%A5%E8%AE%B0/Kawasaki.jpg" class="igmfkxfumgkb" alt="Kawasaki">
-    <style>.yilvcpgyiftg{zoom:20%;}</style><img src="/2025/04/29/%E6%88%91%E7%9A%84450MT%E6%8F%90%E8%BD%A6%E6%97%A5%E8%AE%B0/ktm390ADV.jpg" class="yilvcpgyiftg" alt="ktm390ADV">
-    <style>.wxjvmkfiyter{zoom:20%;}</style><img src="/2025/04/29/%E6%88%91%E7%9A%84450MT%E6%8F%90%E8%BD%A6%E6%97%A5%E8%AE%B0/aplia.jpg" class="wxjvmkfiyter" alt="aplia">
-    <style>.fqctqmrnzrnc{zoom:20%;}</style><img src="/2025/04/29/%E6%88%91%E7%9A%84450MT%E6%8F%90%E8%BD%A6%E6%97%A5%E8%AE%B0/xiaoche.jpg" class="fqctqmrnzrnc" alt="xiaoche">
-</center>
-
-<p><img src="/2025/04/29/%E6%88%91%E7%9A%84450MT%E6%8F%90%E8%BD%A6%E6%97%A5%E8%AE%B0/450mt.png" alt="450mt"></p>
-<p><img src="/2025/04/29/%E6%88%91%E7%9A%84450MT%E6%8F%90%E8%BD%A6%E6%97%A5%E8%AE%B0/450mt.png" alt="450mt"></p>
-<p><img src="/2025/04/29/%E6%88%91%E7%9A%84450MT%E6%8F%90%E8%BD%A6%E6%97%A5%E8%AE%B0/450mt.png" alt="450mt"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-
-</div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-
-  <div class="copyright">
-    &copy; 
-    <span itemprop="copyrightYear">2025</span>
-    <span class="with-love">
-      <i class="fa fa-heart"></i>
-    </span>
-    <span class="author" itemprop="copyrightHolder">Mengge Liu</span>
-  </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
-  </div>
-
-    </div>
-  </footer>
-
-  
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-  <div class="sidebar-dimmer"></div>
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up fa-lg"></i>
-    <span>0%</span>
-  </div>
-
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
-
-</body>
-</html>
-<!-- 页面点击小红心 --> <script type="text/javascript" src="/js/clicklove.js"></script>
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Website Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article Count :</div><div class="item-count">8</div></div><div class="webinfo-item"><div class="item-name">Unique Visitors :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Page Views :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-08-14T13:29:58.780Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 By Mengge Liu</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
