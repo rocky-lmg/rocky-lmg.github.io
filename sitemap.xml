@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://rocky-lmg.github.io/post/%E9%87%8D%E6%96%B0%E5%BC%80%E5%A7%8B.html</loc>
+    
+    <lastmod>2026-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://rocky-lmg.github.io/about/index.html</loc>
     
     <lastmod>2026-01-27</lastmod>
@@ -86,15 +95,6 @@
     <loc>https://rocky-lmg.github.io/post/LLM-Interview-Note.html</loc>
     
     <lastmod>2025-05-15</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://rocky-lmg.github.io/post/hello-world.html</loc>
-    
-    <lastmod>2025-05-14</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
