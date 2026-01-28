@@ -12,6 +12,6 @@ https://rocky-lmg.github.io/post/LLM-Interview-Note.html
 https://rocky-lmg.github.io/
 https://rocky-lmg.github.io/tags/server/
 https://rocky-lmg.github.io/categories/Life/
-https://rocky-lmg.github.io/categories/Life/Motocycle/
 https://rocky-lmg.github.io/categories/Tech/
+https://rocky-lmg.github.io/categories/Life/Motocycle/
 https://rocky-lmg.github.io/categories/Tech/AI-Infra/
